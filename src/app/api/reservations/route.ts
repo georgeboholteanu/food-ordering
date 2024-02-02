@@ -5,7 +5,7 @@ export const GET = async (req: Request) => {
 	const tablen = searchParams.get("tablen");
 
 	try {
-		const table = await prisma.table.findUnique({
+		const table = await prisma.tables.findUnique({
 			where: {
 				title: tablen as string, // fixes null resposonse from findUnique
 			},

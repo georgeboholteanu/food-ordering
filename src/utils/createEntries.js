@@ -290,7 +290,7 @@ var createEmployeesEntries = function () { return __awaiter(void 0, void 0, void
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, 3, 5]);
-                return [4 /*yield*/, connectPrisma_1.prisma.employee.createMany({
+                return [4 /*yield*/, connectPrisma_1.prisma.employees.createMany({
                         data: [
                             {
                                 name: "jon",
@@ -331,7 +331,7 @@ var createTablesEntries = function () { return __awaiter(void 0, void 0, void 0,
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, 3, 5]);
-                return [4 /*yield*/, connectPrisma_1.prisma.table.createMany({
+                return [4 /*yield*/, connectPrisma_1.prisma.tables.createMany({
                         data: [
                             {
                                 title: "table1",

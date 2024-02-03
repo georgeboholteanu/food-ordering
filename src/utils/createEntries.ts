@@ -224,7 +224,7 @@ const createProductsEntries = async () => {
 
 const createEmployeesEntries = async () => {
 	try {
-		await prisma.employee.createMany({
+		await prisma.employees.createMany({
 			data: [
 				{
 					name: "jon",
@@ -251,7 +251,7 @@ const createEmployeesEntries = async () => {
 
 const createTablesEntries = async () => {
 	try {
-		await prisma.table.createMany({
+		await prisma.tables.createMany({
 			data: [
 				{
 					title: "table1",

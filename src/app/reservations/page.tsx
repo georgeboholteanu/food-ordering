@@ -11,7 +11,13 @@ const Reservations = () => {
 	// Fetch table data from API
 	const fetchTables = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/api/tables");
+			const apiUrl =
+				process.env.NEXT_PUBLIC_ENV === "development"
+					? process.env.NEXT_PUBLIC_API_URL_DEV
+					: process.env.NEXT_PUBLIC_API_URL_PROD;
+			const response = await fetch(`${apiUrl}/api/orders`, {
+				cache: "no-cache", //for development only
+			});
 			const data = await response.json();
 			const sortedData = data.sort((a: any, b: any) =>
 				a.title.localeCompare(b.title)
@@ -60,7 +66,7 @@ const Reservations = () => {
 				console.error("Error updating booking status:", error);
 			}
 		} else {
-			toast.error("Please login to make reservations")
+			toast.error("Please login to make reservations");
 		}
 	};
 

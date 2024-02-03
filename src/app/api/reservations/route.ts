@@ -15,7 +15,7 @@ export const GET = async (req: Request) => {
 			// Check if the table is currently available
 			if (table.available || table) { // remove table from if statement for production
 				// Change available status to false in database
-				await prisma.table.update({
+				await prisma.tables.update({
 					where: {
 						title: tablen as string,
 					},

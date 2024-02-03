@@ -44,7 +44,7 @@ var createCategoryEntries = function () { return __awaiter(void 0, void 0, void 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, 3, 5]);
+                _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, connectPrisma_1.prisma.category.createMany({
                         data: [
                             {
@@ -87,19 +87,12 @@ var createCategoryEntries = function () { return __awaiter(void 0, void 0, void 
             case 1:
                 _a.sent();
                 console.log("Category entries created successfully");
-                return [3 /*break*/, 5];
+                return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
                 console.error("Error creating category entries:", error_1);
-                return [3 /*break*/, 5];
-            case 3: 
-            // Disconnect Prisma client when done
-            return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
-            case 4:
-                // Disconnect Prisma client when done
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -108,7 +101,7 @@ var createProductsEntries = function () { return __awaiter(void 0, void 0, void 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, 3, 5]);
+                _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, connectPrisma_1.prisma.product.createMany({
                         data: [
                             {
@@ -268,19 +261,12 @@ var createProductsEntries = function () { return __awaiter(void 0, void 0, void 
             case 1:
                 _a.sent();
                 console.log("Category entries created successfully");
-                return [3 /*break*/, 5];
+                return [3 /*break*/, 3];
             case 2:
                 error_2 = _a.sent();
                 console.error("Error creating category entries:", error_2);
-                return [3 /*break*/, 5];
-            case 3: 
-            // Disconnect Prisma client when done
-            return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
-            case 4:
-                // Disconnect Prisma client when done
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -289,7 +275,7 @@ var createEmployeesEntries = function () { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, 3, 5]);
+                _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, connectPrisma_1.prisma.employees.createMany({
                         data: [
                             {
@@ -309,19 +295,12 @@ var createEmployeesEntries = function () { return __awaiter(void 0, void 0, void
             case 1:
                 _a.sent();
                 console.log("Category entries created successfully");
-                return [3 /*break*/, 5];
+                return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
                 console.error("Error creating category entries:", error_3);
-                return [3 /*break*/, 5];
-            case 3: 
-            // Disconnect Prisma client when done
-            return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
-            case 4:
-                // Disconnect Prisma client when done
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -330,7 +309,7 @@ var createTablesEntries = function () { return __awaiter(void 0, void 0, void 0,
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, 3, 5]);
+                _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, connectPrisma_1.prisma.tables.createMany({
                         data: [
                             {
@@ -362,23 +341,39 @@ var createTablesEntries = function () { return __awaiter(void 0, void 0, void 0,
             case 1:
                 _a.sent();
                 console.log("Category entries created successfully");
-                return [3 /*break*/, 5];
+                return [3 /*break*/, 3];
             case 2:
                 error_4 = _a.sent();
                 console.error("Error creating category entries:", error_4);
-                return [3 /*break*/, 5];
-            case 3: 
-            // Disconnect Prisma client when done
-            return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
-            case 4:
-                // Disconnect Prisma client when done
-                _a.sent();
-                return [7 /*endfinally*/];
-            case 5: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-createCategoryEntries();
-createProductsEntries();
-createTablesEntries();
-createEmployeesEntries();
+// Main function to create all entries
+var createEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, createCategoryEntries()];
+            case 1:
+                _a.sent();
+                return [4 /*yield*/, createProductsEntries()];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, createTablesEntries()];
+            case 3:
+                _a.sent();
+                return [4 /*yield*/, createEmployeesEntries()];
+            case 4:
+                _a.sent();
+                // Disconnect Prisma client when all operations are done
+                return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
+            case 5:
+                // Disconnect Prisma client when all operations are done
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+// Call the main function to start creating entries
+createEntries();

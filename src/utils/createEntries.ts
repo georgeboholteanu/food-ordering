@@ -48,10 +48,7 @@ const createCategoryEntries = async () => {
 		console.log("Category entries created successfully");
 	} catch (error) {
 		console.error("Error creating category entries:", error);
-	} finally {
-		// Disconnect Prisma client when done
-		await prisma.$disconnect();
-	}
+	} 
 };
 
 const createProductsEntries = async () => {
@@ -216,10 +213,7 @@ const createProductsEntries = async () => {
 		console.log("Category entries created successfully");
 	} catch (error) {
 		console.error("Error creating category entries:", error);
-	} finally {
-		// Disconnect Prisma client when done
-		await prisma.$disconnect();
-	}
+	} 
 };
 
 const createEmployeesEntries = async () => {
@@ -243,10 +237,7 @@ const createEmployeesEntries = async () => {
 		console.log("Category entries created successfully");
 	} catch (error) {
 		console.error("Error creating category entries:", error);
-	} finally {
-		// Disconnect Prisma client when done
-		await prisma.$disconnect();
-	}
+	} 
 };
 
 const createTablesEntries = async () => {
@@ -282,16 +273,19 @@ const createTablesEntries = async () => {
 		console.log("Category entries created successfully");
 	} catch (error) {
 		console.error("Error creating category entries:", error);
-	} finally {
-		// Disconnect Prisma client when done
-		await prisma.$disconnect();
-	}
+	} 
 };
 
-createCategoryEntries();
+// Main function to create all entries
+const createEntries = async () => {
+    await createCategoryEntries();
+    await createProductsEntries();
+    await createTablesEntries();
+    await createEmployeesEntries();
 
-createProductsEntries();
+    // Disconnect Prisma client when all operations are done
+    await prisma.$disconnect();
+};
 
-createTablesEntries();
-
-createEmployeesEntries();
+// Call the main function to start creating entries
+createEntries();

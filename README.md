@@ -6,7 +6,7 @@
 ![DOCKER](https://img.shields.io/badge/docker-black?style=for-the-badge&logo=docker)
 [![VERCEL](https://img.shields.io/badge/vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://food-ordering-ten.vercel.app)
 
-## Restaurant App using NextJs, Docker and Prisma
+## Food Ordering App using NextJs, Docker and Prisma
 
 ### **Deployed on VERCEL** : [Food Ordering](https://food-ordering-ten.vercel.app)
 

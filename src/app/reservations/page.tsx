@@ -15,9 +15,10 @@ const Reservations = () => {
 				process.env.NEXT_PUBLIC_ENV === "development"
 					? process.env.NEXT_PUBLIC_API_URL_DEV
 					: process.env.NEXT_PUBLIC_API_URL_PROD;
-			const response = await fetch(`${apiUrl}/api/orders`, {
+			const response = await fetch(`${apiUrl}/api/tables`, {
 				cache: "no-cache", //for development only
 			});
+
 			const data = await response.json();
 			const sortedData = data.sort((a: any, b: any) =>
 				a.title.localeCompare(b.title)
@@ -36,8 +37,12 @@ const Reservations = () => {
 		if (session.status === "authenticated") {
 			try {
 				// Assuming you have an API endpoint to handle booking status changes
+				const apiUrl =
+					process.env.NEXT_PUBLIC_ENV === "development"
+						? process.env.NEXT_PUBLIC_API_URL_DEV
+						: process.env.NEXT_PUBLIC_API_URL_PROD;
 				const response = await fetch(
-					`http://localhost:3000/api/reservations?tablen=${tableName}`,
+					`${apiUrl}/api/reservations?tablen=${tableName}`,
 					{
 						method: "GET",
 						headers: {

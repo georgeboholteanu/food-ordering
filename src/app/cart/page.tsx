@@ -73,9 +73,7 @@ const Cart = () => {
 		setCart(cartItems.products);
 	}, []);
 
-	
 	const placeOrder = async () => {
-		
 		const cartItemsRaw = localStorage.getItem("cartItems");
 		const cartItems = cartItemsRaw
 			? JSON.parse(cartItemsRaw)
@@ -87,7 +85,12 @@ const Cart = () => {
 		}
 
 		try {
-			const response = await fetch("http://localhost:3000/api/orders", {
+			const apiUrl =
+				process.env.NEXT_PUBLIC_ENV === "development"
+					? process.env.NEXT_PUBLIC_API_URL_DEV
+					: process.env.NEXT_PUBLIC_API_URL_PROD;
+
+			const response = await fetch(`${apiUrl}/api/orders`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -118,7 +121,7 @@ const Cart = () => {
 			toast.error("Something went wrong. Please try again.");
 		}
 	};
-	
+
 	// const placeOrder = () => {
 	// 	const cartItemsRaw = localStorage.getItem("cartItems");
 	// 	const cartItems = cartItemsRaw

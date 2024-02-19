@@ -3,15 +3,16 @@ import Image from "next/image";
 
 const Logo = () => {
 	return (
-		<div className="w-[120px] h-[100px]">
+		<div className="w-[168px] h-[42px]">
 			<Link href="/" className="hover:scale-[1.1] transition-all">
 				<div className="relative h-full">
 					<Image
-						src="/general/logo-sangiorgio.png"
+						src="/general/CA-logo.png"
 						alt="Logo"
 						fill
 						priority
-						sizes="(max-width: 640px) 30vw, 200px"
+						quality="100"
+						sizes="(max-width: 168px) 30vw, 168px"
 						
 					/>
 				</div>

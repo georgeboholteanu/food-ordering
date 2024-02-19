@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Alata } from "next/font/google";
+
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 
@@ -21,7 +22,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body className="alata-regular">
 				<AuthProvider>
 					<Header />
 					<ToastContainer />

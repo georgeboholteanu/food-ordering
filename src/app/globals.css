@@ -17,7 +17,12 @@
 
 body {
 	background-color: var(--background);
-	font-family: ;
+	font-family: "Alata", sans-serif;
+}
+
+header {
+	background-color: var(--background);
+
 }
 
 .btn-primary {
@@ -32,6 +37,13 @@ body {
 }
 .btn-border:hover {
 	border-color: var(--divider);
+}
+
+.text-primary {
+	font-family: "Alata", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: small;
 }
 
 /* FONTS CONFIG */

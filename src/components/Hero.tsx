@@ -19,18 +19,20 @@ export default function Hero() {
 				/>
 			</div>
 
-			<div className="absolute w-[310px] inset-0 flex flex-col z-10 mx-auto ml-16 mb-20 justify-end">
-				<p className="tracking-widest text-sm">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna
-					aliqua. Magna etiam tempor orci eu. Odio morbi quis commodo
-					odio aenean.
-				</p>
-				<Link href="/reservations">
-					<button className="bg-red-600 text-white px-4 py-2 rounded-full mt-8">
-						Book Table
-					</button>
-				</Link>
+			<div className="absolute w-[310px] inset-0 flex flex-col z-10 mx-auto ml-16 lg:ml-24 mb-20 justify-end">
+				<div className="lg:bg-green-900/20 p-0 sm:p-6 rounded-lg">
+					<p className="hidden lg:block tracking-widest text-sm">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						sed do eiusmod tempor incididunt ut labore et dolore
+						magna aliqua. Magna etiam tempor orci eu. Odio morbi
+						quis commodo odio aenean.
+					</p>
+					<Link href="/reservations">
+						<button className="bg-red-600 text-white px-4 py-2 rounded-full mt-8">
+							Book A Table
+						</button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

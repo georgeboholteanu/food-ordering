@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const featuredProductsList = [
+const featuredProductsArray = [
 	{
 		image: "/home/featured_pasta_1.png",
 		title: "Lorem food",
@@ -35,12 +35,12 @@ const FeaturedProducts = () => {
 			<div className="container mx-auto justify-center my-10">
 				<div className="flex flex-col items-center justify-center my-10">
 					<h2 className="flex justify-center uppercase text-red-600 text-xl font-bold ">
-						Exquisite dishes
+						Our specials
 					</h2>
-					<span className="bg-gray-500 h-[1px] w-64" />
+					<span className="bg-gray-500 h-[1px] w-48" />
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-					{featuredProductsList.map((products, idx) => {
+					{featuredProductsArray.map((products, idx) => {
 						return (
 							<div
 								key={idx}

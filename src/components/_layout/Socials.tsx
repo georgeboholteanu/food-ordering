@@ -24,7 +24,7 @@ const icons = [
     {
 		path: "https://www.pinterest.com/",
 		name: <RiPinterestFill />,
-		icon_color: "text-cyan-500",
+		icon_color: "text-red-500",
 	},
 ];
 

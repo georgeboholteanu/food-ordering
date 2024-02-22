@@ -13,7 +13,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = () => {
 	return (
-		<header className="sticky top-0 z-30 mx-auto container-fluid p-6">
+		<header className="sticky top-0 z-30 mx-auto container-fluid py-6 px-10 sm:px-20">
 			<div className="container mx-auto ">
 				<div className="flex items-center justify-between">
 					<Logo containerStyles="" />

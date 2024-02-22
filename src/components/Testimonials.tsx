@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa";
 
 const testimonialsArray = [
 	{
-		image: "/home/portrait_of_a_white_woman_with_scarf.png",
+		image: "/home/portrait_of_a_white_woman_blonde.png",
 		title: "Jane Smith",
 		description:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -40,9 +40,9 @@ const Testimonials = () => {
 						return (
 							<div
 								key={idx}
-								className="flex flex-col justify-center gap-4 bg-pink-100/30 rounded-lg"
+								className="flex flex-col justify-center gap-4 bg-pink-100/30"
 							>
-								<div className="relative h-[30vh]">
+								<div className="relative h-[30vh] mx-4">
 									<Image
 										src={testimonial.image}
 										alt="featured image"

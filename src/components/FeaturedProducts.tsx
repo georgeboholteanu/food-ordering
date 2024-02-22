@@ -12,13 +12,13 @@ const featuredProductsArray = [
 		image: "/home/featured_pasta_2.png",
 		title: "Ipsum dolor",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Dolor laboris velit esse ex proident incididunt adipisicing consequat. Commodo tempor laborum minim eu. Incididunt commodo duis irure veniam pariatur deserunt ipsum occaecat aute.",
 	},
 	{
 		image: "/home/featured_pasta_3.png",
 		title: "Dolor Sit",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Consequat velit excepteur laborum proident anim dolor nostrud est sit. Deserunt pariatur anim non anim eiusmod do minim ipsum laborum do et do amet aute.",
 	},
 	{
 		image: "/home/featured_pasta_4.png",

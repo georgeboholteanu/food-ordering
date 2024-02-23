@@ -26,8 +26,46 @@ header {
 }
 
 .btn-primary {
-	background-color: var(--primary);
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem; 
+    border-radius: 999px; 
+    cursor: pointer;
+    height: 40px; 
+    box-sizing: border-box; 
+    transition: all 0.3s ease; 
 }
+
+.btn-primary:hover .btn-third:hover {
+    background-color: transparent;
+    color: black;
+    border: 1px solid var(--primary); 
+}
+
+.btn-secondary {    
+    color: black;
+    border: 1px solid var(--primary); 
+    padding: 0.5rem 1rem; 
+    border-radius: 999px; 
+    cursor: pointer;
+    height: 40px; 
+    box-sizing: border-box; 
+    transition: all 0.3s ease; 
+}
+
+.btn-third {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem; 
+    border-radius: 999px; 
+    cursor: pointer;
+    height: 26px; 
+    box-sizing: border-box; 
+    transition: all 0.3s ease; 
+}
+
 
 .btn-border {
 	border-radius: 9999px;

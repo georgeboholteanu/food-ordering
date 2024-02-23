@@ -1,16 +1,23 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import { MenuType } from "@/app/types/types";
-import Link from "next/link";
-import Image from "next/image";
+"use client";
+import React, { useMemo, useState } from "react";
+import { ProductType } from "@/app/types/types";
+import { GoMoveToTop } from "react-icons/go";
 
-const getData = async () => {
+// components
+import Card from "@/components/Card";
+
+const menuItems = ["menu", "pastas", "pizzas", "burgers", "salads", "drinks"];
+const getData = async (product: string) => {
 	const apiUrl =
-				process.env.NEXT_PUBLIC_ENV === "development"
-					? process.env.NEXT_PUBLIC_API_URL_DEV
-					: process.env.NEXT_PUBLIC_API_URL_PROD;
-					
-	const res = await fetch(`${apiUrl}/api/categories`, {
+		process.env.NEXT_PUBLIC_ENV === "development"
+			? process.env.NEXT_PUBLIC_API_URL_DEV
+			: process.env.NEXT_PUBLIC_API_URL_PROD;
+	const url =
+		product === "menu"
+			? `${apiUrl}/api/products`
+			: `${apiUrl}/api/products?cat=${product}`;
+
+	const res = await fetch(url, {
 		cache: "no-cache", //for development only
 	});
 
@@ -22,55 +29,92 @@ const getData = async () => {
 };
 
 const Menu = () => {
+	const [products, setProducts] = useState<ProductType[]>([]);
+	const [productTitle, setProductTitle] = useState<string>("");
 
-	const [menu, setMenu] = useState<MenuType[]>([]);
-
-	useEffect(() => {
+	useMemo(() => {
+		// Fetch products on demand
 		const fetchData = async () => {
 			try {
-				const categories: MenuType[] = await getData();
-				setMenu(categories);
+				if (productTitle) {
+					const currentProducts: ProductType[] = await getData(
+						productTitle
+					);
+
+					setProducts(currentProducts);
+				}
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 
 		fetchData();
+	}, [productTitle]);
+
+	useMemo(() => {
+		// Fetch initial products when the component mounts
+		const fetchInitialProducts = async () => {
+			try {
+				const initialProducts: ProductType[] = await getData("menu");
+				setProducts(initialProducts);
+			} catch (error) {
+				console.error("Error fetching initial data:", error);
+			}
+		};
+
+		fetchInitialProducts();
 	}, []);
-	
+
+	const handleProductClick = (item: string) => {
+		setProductTitle(item);
+	};
 
 	return (
-		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-4 gap-4 mx-auto container justify-between">
-			{menu.map((item) => (
-				<div
-					className="max-w-sm flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-					key={item.id}
-				>
-					<Link
-						href={`/menu/${item.slug}`}
-						className="flex justify-center h-[250px] relative"
-					>
-						<Image
-							src={item.img || ""}
-							alt={item.title}
-							fill
-							className="object-cover"
-							sizes="(max-width: 640px) 30vw, 200px" 
-						/>
-					</Link>
-					<div className="p-5 justify-between flex flex-col h-[200px] overflow-hidden">
-						<Link href={`/menu/${item.slug}`}>
-							<h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-								{item.title}
-							</h5>
-						</Link>
-						<p className="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">
-							{item.desc}
-						</p>
+		// MENU
+		<section className="mx-10 sm:mx-12 md:mx-16 lg:mx-20">
+			<div className="container mx-auto justify-center">
+				{/* SUB MENU */}
+				<div className="py-2 md:py-4 z-50">
+					<ul className="container mx-auto flex flex-wrap gap-2 justify-center font-semibold text-xs text-white">
+						{menuItems.map((item) => (
+							<li key={item}>
+								<button
+									onClick={() => handleProductClick(item)}
+									className="btn-third capitalize"
+								>
+									{item}
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+				{/* MENU CARDS */}
+				<div className="my-10 min-h-screen">
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-between">
+						{products.map((item) => (
+							<div key={item.id} className="w-full">
+								<Card
+									cardTitle={`${item.title}`}
+									cardDescription={`${item.desc}`}
+									cardImage={`${item.img}`}
+								/>
+							</div>
+						))}
 					</div>
 				</div>
-			))}
-		</div>
+				{/* JUMP TO TOP BTN */}
+				<div>
+					<button
+						className="fixed bottom-10 left-10 btn p-4 rounded-xl border-none bg-white/50 text-red-500 text-xl "
+						onClick={() =>
+							window.scrollTo({ top: 0, behavior: "smooth" })
+						}
+					>
+						<GoMoveToTop />
+					</button>
+				</div>
+			</div>
+		</section>
 	);
 };
 

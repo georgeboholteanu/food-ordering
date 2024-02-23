@@ -1,6 +1,5 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { AlignJustify, Link } from "lucide-react";
-import { FaCartArrowDown } from "react-icons/fa6";
+import { AlignJustify } from "lucide-react";
 
 // components
 import Navbar from "./Navbar";
@@ -20,9 +19,9 @@ const MobileNav = () => {
 						<Logo containerStyles="justify-center flex mt-4" />
 						<Navbar
 							containerStyles="flex flex-col items-center gap-y-6 pt-20 pb-10"
-							linkStyles="text-lg text-white"
+							linkStyles="text-lg text-black"
 						/>
-						<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 pt-20 pb-20 text-white text-lg"/>
+						<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 pt-20 pb-20 text-black text-lg"/>
 						<Socials containerStyles="flex justify-center gap-x-4" />
 					</div>
 				</div>

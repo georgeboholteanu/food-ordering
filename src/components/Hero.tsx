@@ -28,7 +28,7 @@ export default function Hero() {
 						quis commodo odio aenean.
 					</p>
 					<Link href="/reservations">
-						<button className="bg-red-600 text-white px-4 py-2 rounded-full mt-8">
+						<button className="btn-primary text-white font-semibold mt-8">
 							Book A Table
 						</button>
 					</Link>

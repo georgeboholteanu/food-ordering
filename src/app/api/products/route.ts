@@ -1,15 +1,23 @@
+// localhost:3000/api/products?cat=searchParams
+// localhost:3000/api/products
 import { prisma } from "@/utils/connectPrisma";
 
-export const GET = async ( req: Request ) => {
-	const { searchParams } = new URL (req.url);
-	const cat = searchParams.get("cat"); // localhost:3000/api/menu/?cat=searchParams
+export const GET = async (req: Request) => {
+	const { searchParams } = new URL(req.url);
+	const cat = searchParams.get("cat"); 
 
 	try {
-		const products = await prisma.product.findMany({
-			where: {
-				...(cat ? { catSlug: cat } : { isFeatured: true }),
-			},
-		});
+		let products;
+		if (cat) {
+			products = await prisma.product.findMany({
+				where: {
+					...(cat ? { catSlug: cat } : { isFeatured: true }),
+				},
+			});
+		} else {
+			products = await prisma.product.findMany();
+		}
+
 		return new Response(JSON.stringify(products), { status: 200 });
 	} catch (error) {
 		return new Response(

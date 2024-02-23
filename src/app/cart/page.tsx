@@ -149,7 +149,7 @@ const Cart = () => {
 
 	return (
 		<>
-			<div className="container mx-auto">
+			<div className="container mx-auto my-10 min-h-screen">
 				<ul className="">
 					{cart.map((item, index) => (
 						<li key={index}>
@@ -182,10 +182,10 @@ const Cart = () => {
 					))}
 				</ul>
 				<div className="justify-end flex gap-6 mt-5 text-xl">
-					<span className="font-semibold text-orange-600/80">
+					<span className="font-semibold text-red-600/80">
 						Total
 					</span>
-					<span className="font-semibold text-orange-600/80">
+					<span className="font-semibold text-red-600/80">
 						{cart
 							.reduce(
 								(total, item) =>
@@ -198,15 +198,15 @@ const Cart = () => {
 				<div className="justify-end flex gap-6 mt-5 text-xl ">
 					<button
 						onClick={emptyCart}
-						className="bg-yellow-200/20 p-4 rounded-3xl hover:bg-yellow-200/10 shadow-md text-sm"
+						className="bg-gray-500/50 p-4 rounded-3xl hover:bg-gray-500/30 shadow-md text-sm "
 					>
-						<span className="font-semibold">Empty Cart</span>
+						<span className="font-semibold text-white">Empty Cart</span>
 					</button>
 					<button
 						onClick={placeOrder}
-						className="bg-orange-600/80 p-4 rounded-3xl hover:bg-orange-500/80 shadow-md text-sm"
+						className="btn-primary p-4 rounded-3xl hover:bg-red-500/80 shadow-md text-sm "
 					>
-						<span className="font-semibold">Place Order</span>
+						<span className="font-semibold text-white">Place Order</span>
 					</button>
 				</div>
 			</div>

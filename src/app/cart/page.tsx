@@ -75,6 +75,7 @@ const Cart = () => {
 		setCart(cartItems.products);
 	}, []);
 
+	// WIP login to be fixed
 	// const placeOrder = async () => {
 	// 	const cartItemsRaw = localStorage.getItem("cartItems");
 	// 	const cartItems = cartItemsRaw
@@ -135,8 +136,19 @@ const Cart = () => {
 			? JSON.parse(cartItemsRaw)
 			: { products: [] };
 
-			console.log(cartItems)
+		console.log(cartItems);
+
+		// check if cartItems variable exist in local storage
+		
+		if (cartItems.products.length === 0 || !cartItems) {
+			toast.error("Your cart is empty!");
+		} else {
+			toast.success("Order has been placed successfully!");
+			localStorage.removeItem("cartItems");
+			setCart([])
+		}
 	};
+
 	const emptyCart = () => {
 		localStorage.removeItem("cartItems");
 		setCart([]);

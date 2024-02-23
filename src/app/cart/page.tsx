@@ -5,10 +5,10 @@ import { CgRemove } from "react-icons/cg";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
+import { useSession } from "next-auth/react";
 
 const Cart = () => {
+	const session = useSession();
 	const [cart, setCart] = useState<ProductType[]>([]);
 
 	const incrementProduct = (prod: ProductType) => {
@@ -75,63 +75,68 @@ const Cart = () => {
 		setCart(cartItems.products);
 	}, []);
 
-	const placeOrder = async () => {
-		const cartItemsRaw = localStorage.getItem("cartItems");
-		const cartItems = cartItemsRaw
-			? JSON.parse(cartItemsRaw)
-			: { products: [] };
-
-		if (cartItems.products.length === 0) {
-			toast.error("Your cart is empty!");
-			return;
-		}
-
-		try {
-			const apiUrl =
-				process.env.NEXT_PUBLIC_ENV === "development"
-					? process.env.NEXT_PUBLIC_API_URL_DEV
-					: process.env.NEXT_PUBLIC_API_URL_PROD;
-
-			const response = await fetch(`${apiUrl}/api/orders`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					products: cartItems.products,
-					userEmail: "emailtest@gmail.com",
-					tableSlug: "table1",
-					totalPrice: cartItems.products
-						.reduce(
-							(total: any, item: any) =>
-								total + item.price * item.options.quantity,
-							0
-						)
-						.toFixed(2),
-				}),
-			});
-
-			if (response.ok) {
-				toast.success("Order has been placed successfully!");
-				console.log(await response.json()); // Assuming the server returns the created order data
-				localStorage.removeItem("cartItems"); // Clear the cart after placing the order
-			} else {
-				toast.error("Failed to place the order. Please try again.");
-			}
-		} catch (error) {
-			console.error("Error placing order:", error);
-			toast.error("Something went wrong. Please try again.");
-		}
-	};
-
-	// const placeOrder = () => {
+	// const placeOrder = async () => {
 	// 	const cartItemsRaw = localStorage.getItem("cartItems");
 	// 	const cartItems = cartItemsRaw
 	// 		? JSON.parse(cartItemsRaw)
 	// 		: { products: [] };
 
-	// 		console.log(cartItems)
+	// 	if (cartItems.products.length === 0) {
+	// 		toast.error("Your cart is empty!");
+	// 		return;
+	// 	} else if (
+	// 		cartItems.products.length > 0 &&
+	// 		session.status === "authenticated"
+	// 	) {
+	// 		try {
+	// 			const apiUrl =
+	// 				process.env.NEXT_PUBLIC_ENV === "development"
+	// 					? process.env.NEXT_PUBLIC_API_URL_DEV
+	// 					: process.env.NEXT_PUBLIC_API_URL_PROD;
+
+	// 			const response = await fetch(`${apiUrl}/api/orders`, {
+	// 				method: "POST",
+	// 				headers: {
+	// 					"Content-Type": "application/json",
+	// 				},
+	// 				body: JSON.stringify({
+	// 					products: cartItems.products,
+	// 					userEmail: "emailtest@gmail.com",
+	// 					tableSlug: "table1",
+	// 					totalPrice: cartItems.products
+	// 						.reduce(
+	// 							(total: any, item: any) =>
+	// 								total + item.price * item.options.quantity,
+	// 							0
+	// 						)
+	// 						.toFixed(2),
+	// 				}),
+	// 			});
+
+	// 			if (response.ok) {
+	// 				toast.success("Order has been placed successfully!");
+	// 				console.log(await response.json());
+	// 				localStorage.removeItem("cartItems");
+	// 			} else {
+	// 				toast.error("Failed to place the order. Please try again.");
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Error placing order:", error);
+	// 			toast.error("Something went wrong. Please try again.");
+	// 		}
+	// 	} else {
+	// 		toast.error("Please login to make an order.");
+	// 	}
 	// };
+
+	const placeOrder = () => {
+		const cartItemsRaw = localStorage.getItem("cartItems");
+		const cartItems = cartItemsRaw
+			? JSON.parse(cartItemsRaw)
+			: { products: [] };
+
+			console.log(cartItems)
+	};
 	const emptyCart = () => {
 		localStorage.removeItem("cartItems");
 		setCart([]);
@@ -151,21 +156,21 @@ const Cart = () => {
 
 	return (
 		<>
-			<div className="container mx-auto my-10 min-h-screen">
-				<ul className="">
+			<div className="my-10 min-h-screen mx-10 sm:mx-12 md:mx-16 lg:mx-20">
+				<ul className="container mx-auto">
 					{cart.map((item, index) => (
 						<li key={index}>
-							<div className="flex py-4 font-bold border-b-2 justify-between">
-								<span className="">{item.title}</span>
-								<div className="flex gap-4 items-center">
-									<span className="text-md">
+							<div className="flex py-4 font-bold border-b-2 justify-between items-center">
+								<span className="flex">{item.title}</span>
+								<div className="flex gap-3 items-center">
+									<span className="text-md text-red-500">
 										x{item.options.quantity}
 									</span>
 									<button
 										onClick={() =>
 											handledecrementProduct(item)
 										}
-										className="text-gray-700 hover:text-red-500 text-2xl transition-all"
+										className="text-gray-700 hover:text-red-500 text-xl transition-all"
 									>
 										<CgRemove />
 									</button>
@@ -174,7 +179,7 @@ const Cart = () => {
 									</span>
 									<button
 										onClick={() => incrementProduct(item)}
-										className="text-gray-700 hover:text-red-500 text-3xl transition-all"
+										className="text-gray-700 hover:text-red-500 text-2xl transition-all"
 									>
 										<IoAddCircleOutline />
 									</button>

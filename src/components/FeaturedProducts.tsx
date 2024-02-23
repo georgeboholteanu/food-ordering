@@ -54,6 +54,7 @@ const FeaturedProducts = () => {
 										layout={"fill"}
 										objectFit="cover"
 										className="absolute inset-0 rounded-lg"
+										priority
 									/>
 								</div>
 								<h4 className="text-lg text-red-600 font-semibold px-2 justify-center flex">

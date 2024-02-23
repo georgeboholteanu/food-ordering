@@ -25,24 +25,29 @@ function Login() {
 	}
 
 	return (
-		<div className="container mx-auto justify-center items-center mt-20">
-			<div className="flex shadow-xl">
+		// LOGIN
+		<section
+			className="container mx-auto my-10"
+			style={{ minHeight: "calc(100vh - 350px)" }}
+		>
+			<div className=" relative justify-center items-center">
 				{/* image */}
-				<div className="w-[500px] h-[500px] ">
-					<div className="relative h-full ">
-						<Image
-							src="/general/clark-douglas-17ZU9BPy_Q4-unsplash.jpg"
-							alt="Logo"
-							fill
-							priority
-							sizes="(max-width: 1000px) 30vw, 400px"
-							quality={100}
-							className="rounded-l-lg"
-						/>
-					</div>
+				<div className="h-[50vh] md:h-[70vh]">
+					<Image
+						src="/general/clark-douglas-17ZU9BPy_Q4-unsplash.jpg"
+						alt="login image"
+						fill
+						priority
+						layout={"fill"}
+						objectFit="cover"
+						className="rounded-lg"
+						onError={(e) =>
+							console.error("Error loading image:", e)
+						}
+					/>
 				</div>
 				{/* buttons */}
-				<div className="flex flex-col gap-4 rounded-r-lg px-20 justify-center">
+				<div className="flex flex-col gap-4 rounded-r-lg justify-center items-center z-10 absolute inset-0">
 					<div className="">
 						<button
 							className="flex gap-6 border rounded-md px-4 py-4 w-[220px] justify-center shadow-sm bg-slate-300 hover:bg-slate-400/60"
@@ -64,7 +69,7 @@ function Login() {
 					</Link>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 }
 

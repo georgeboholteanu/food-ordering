@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 	description: "Exquisite dishes a la carte",
 };
 
+
 export default function RootLayout({
 	children,
 }: {
@@ -26,7 +27,13 @@ export default function RootLayout({
 			<body className="alata-regular">
 				<AuthProvider>
 					<Header />
-					<ToastContainer />
+					<ToastContainer
+						autoClose={2000}
+						draggable={false}
+						closeButton={false}						
+						position="bottom-right"
+						style={{ bottom: "20px" }}
+					/>
 					{children}
 					<Footer />
 				</AuthProvider>

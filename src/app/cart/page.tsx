@@ -6,6 +6,8 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 const Cart = () => {
 	const [cart, setCart] = useState<ProductType[]>([]);
 
@@ -182,9 +184,7 @@ const Cart = () => {
 					))}
 				</ul>
 				<div className="justify-end flex gap-6 mt-5 text-xl">
-					<span className="font-semibold text-red-600/80">
-						Total
-					</span>
+					<span className="font-semibold text-red-600/80">Total</span>
 					<span className="font-semibold text-red-600/80">
 						{cart
 							.reduce(
@@ -198,15 +198,19 @@ const Cart = () => {
 				<div className="justify-end flex gap-6 mt-5 text-xl ">
 					<button
 						onClick={emptyCart}
-						className="bg-gray-500/50 p-4 rounded-3xl hover:bg-gray-500/30 shadow-md text-sm "
+						className="btn-secondary hover:border-gray-500 shadow-md text-sm "
 					>
-						<span className="font-semibold text-white">Empty Cart</span>
+						<span className="font-semibold text-gray-800">
+							Empty Cart
+						</span>
 					</button>
 					<button
 						onClick={placeOrder}
-						className="btn-primary p-4 rounded-3xl hover:bg-red-500/80 shadow-md text-sm "
+						className="btn-primary shadow-md text-sm "
 					>
-						<span className="font-semibold text-white">Place Order</span>
+						<span className="font-semibold text-gray-200">
+							Place Order
+						</span>
 					</button>
 				</div>
 			</div>

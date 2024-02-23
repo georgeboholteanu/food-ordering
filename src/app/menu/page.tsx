@@ -74,7 +74,7 @@ const Menu = () => {
 		<section className="mx-10 sm:mx-12 md:mx-16 lg:mx-20">
 			<div className="container mx-auto justify-center">
 				{/* SUB MENU */}
-				<div className="py-2 md:py-4 z-50">
+				<div className="z-50">
 					<ul className="container mx-auto flex flex-wrap gap-2 justify-center font-semibold text-xs text-white">
 						{menuItems.map((item) => (
 							<li key={item}>
@@ -97,6 +97,8 @@ const Menu = () => {
 									cardTitle={`${item.title}`}
 									cardDescription={`${item.desc}`}
 									cardImage={`${item.img}`}
+									cardPrice={`${item.price}`}
+									product={item}
 								/>
 							</div>
 						))}

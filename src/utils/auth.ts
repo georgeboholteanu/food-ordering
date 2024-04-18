@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
 		async jwt({ token }) {
 			try {
 				// Ensure the model name matches what's defined in your Prisma schema
-				const userInDb = await prisma.user.findUnique({
+				const userInDb = await prisma.users.findUnique({
 					where: {
 						email: token.email!,
 					},

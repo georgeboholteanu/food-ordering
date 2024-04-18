@@ -11,11 +11,10 @@ type NavbarProps = {
 };
 
 const links = [
-	{ path: "/", name: "HOME" },
-	{ path: "/menu", name: "STORY" },
-	{ path: "/contact", name: "CONTACT" },
+	{ path: "/", name: "HOME" },	
 	{ path: "/menu", name: "MENU" },
 	{ path: "/reservations", name: "RESERVATIONS" },
+	{ path: "/contact", name: "CONTACT" },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({

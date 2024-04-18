@@ -38,12 +38,18 @@ export const authOptions: NextAuthOptions = {
 			return session;
 		},
 		async jwt({ token }) {
-			const userInDb = await prisma.users.findUnique({
-				where: {
-					email: token.email!,
-				},
-			});
-			token.isAdmin = userInDb?.isAdmin;
+			try {
+				// Ensure the model name matches what's defined in your Prisma schema
+				const userInDb = await prisma.user.findUnique({
+					where: {
+						email: token.email!,
+					},
+				});
+				token.isAdmin = userInDb?.isAdmin ?? false;
+			} catch (error) {
+				console.error("Error in JWT callback:", error);
+				// Handle error appropriately
+			}
 			return token;
 		},
 	},

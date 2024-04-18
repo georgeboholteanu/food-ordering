@@ -125,7 +125,7 @@ const LoginForm = () => {
 				</div>
 			</form>
 			<p className="text-center text-gray-500 text-xs">
-				&copy;2024 SanGiorgio. All rights reserved.
+				&copy;2024 Cucina Autentica. All rights reserved.
 			</p>
 		</div>
 	);

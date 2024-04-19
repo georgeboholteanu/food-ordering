@@ -4,10 +4,11 @@ import { TableType } from "@/types/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Reservations = () => {
 	const [tables, setTables] = useState<TableType[]>([]);
-	const session = useSession();
+	// const session = useSession();
 	// Fetch table data from API
 	const fetchTables = async () => {
 		try {
@@ -34,7 +35,8 @@ const Reservations = () => {
 	}, [tables]);
 
 	const handleBooking = async (tableName: string) => {
-		if (session.status === "authenticated") {
+		if (true == true) {
+			// if (session.status === "authenticated") {
 			try {
 				// Assuming you have an API endpoint to handle booking status changes
 				const apiUrl =
@@ -76,31 +78,62 @@ const Reservations = () => {
 	};
 
 	return (
-		<div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-			{tables.map((table) => (
-				<div className="m-2 flex flex-col" key={table.id}>
-					<div>
-						<div
-							className={`${
-								table.available
-									? "bg-green-500 hover:bg-green-300"
-									: "bg-red-500 hover:bg-red-300"
-							} w-full p-20 text-center  transition-all`}
-						>
-							<div className="capitalize">{table.title}</div>
+		<div>
+			<h2 className="text-3xl font-bold text-center my-4">
+				RESERVATIONS
+			</h2>
+			<div className="container mx-auto p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+				{tables.map((table) => (
+					<div className="m-2 flex flex-col" key={table.id}>
+						<div>
+							<div className="w-full p-10 border border-red-500/30 rounded-xl bg-gray-300 shadow-inner">
+								<div className="flex flex-col gap-4 place-items-center ">
+									<div className="flex space-x-4 ">
+										<h3 className="text-2xl font-bold uppercase">
+											{table.title}
+										</h3>
+										<span
+											className={`text-2xl font-bold ${
+												table.available
+													? "text-green-600 "
+													: "text-red-500/70 "
+											}`}
+										>
+											{table.available
+												? "Available"
+												: "Unavailable"}
+										</span>
+									</div>
+									<span className="bg-gray-500 w-full h-[1px]"></span>
+									<Image
+										src="/general/table.png"
+										alt="table with chairs"
+										width={150}
+										height={150}
+										priority
+									/>
+									<div className="flex gap-2 justify-between mt-2">
+										<button
+											className={` w-full rounded-lg py-2 px-4 font-semibold ${
+												table.available
+													? "bg-green-500/30 hover:bg-green-400/20"
+													: "bg-red-500/30 hover:bg-red-400/30}"
+											}`}
+											onClick={() =>
+												handleBooking(table.title)
+											}
+										>
+											{table.available
+												? "Book Now"
+												: "Reserved"}
+										</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div className="flex gap-2 justify-between mt-2">
-						<button
-							className="bg-violet-400 hover:bg-violet-300 w-full rounded-lg p-2 "
-							onClick={() => handleBooking(table.title)}
-						>
-							Make Reservation
-						</button>
-					</div>
-				</div>
-			))}
+				))}
+			</div>
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import { ProductType } from "@/app/types/types";
+import { ProductType } from "@/types/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

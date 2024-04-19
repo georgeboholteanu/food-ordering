@@ -1,5 +1,5 @@
-import { ProductType } from "@/app/types/types";
-import { getAuthSession } from "@/utils/auth";
+import { ProductType } from "@/types/types";
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/options";
 import { prisma } from "@/utils/connectPrisma";
 
 export const GET = async () => {

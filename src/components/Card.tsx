@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 // components
 import { addToCartFromMenu } from "@/utils/cart";
-import { ProductType } from "@/app/types/types";
+import { ProductType } from "@/types/types";
 type CardProps = {
 	cardTitle: string;
 	cardDescription: string;

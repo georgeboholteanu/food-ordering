@@ -1,33 +1,32 @@
-import { getAuthSession } from "@/utils/auth";
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/options";
 import { prisma } from "@/utils/connectPrisma";
 
-
 export const GET = async () => {
-    const session = await getAuthSession();
+	const session = await getAuthSession();
 
-    if (!session) {
-        return new Response(JSON.stringify({ message: "Unauthorized" }), {
-            status: 401,
-        });
-    }
+	if (!session) {
+		return new Response(JSON.stringify({ message: "Unauthorized" }), {
+			status: 401,
+		});
+	}
 
-    try {
-        const orders = await prisma.order.findMany();
+	try {
+		const orders = await prisma.order.findMany();
 
-        if (orders.length > 0) {
-            return new Response(JSON.stringify(orders), { status: 200 });
-        } else {
-            return new Response(
-                JSON.stringify({ message: "No orders found" }),
-                { status: 404 }
-            );
-        }
-    } catch (error) {
-        return new Response(
-            JSON.stringify({ message: "Something went wrong" }),
-            { status: 500 }
-        );
-    }
+		if (orders.length > 0) {
+			return new Response(JSON.stringify(orders), { status: 200 });
+		} else {
+			return new Response(
+				JSON.stringify({ message: "No orders found" }),
+				{ status: 404 }
+			);
+		}
+	} catch (error) {
+		return new Response(
+			JSON.stringify({ message: "Something went wrong" }),
+			{ status: 500 }
+		);
+	}
 };
 
 export const POST = async (req: Request) => {

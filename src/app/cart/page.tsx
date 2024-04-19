@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { ProductType } from "@/app/types/types";
+import { ProductType } from "@/types/types";
 import { CgRemove } from "react-icons/cg";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
@@ -139,13 +139,13 @@ const Cart = () => {
 		console.log(cartItems);
 
 		// check if cartItems variable exist in local storage
-		
+
 		if (cartItems.products.length === 0 || !cartItems) {
 			toast.error("Your cart is empty!");
 		} else {
 			toast.success("Order has been placed successfully!");
 			localStorage.removeItem("cartItems");
-			setCart([])
+			setCart([]);
 		}
 	};
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { OrderType } from "@/app/types/types";
+import { OrderType } from "@/types/types";
 
 const getData = async () => {
 	const apiUrl =

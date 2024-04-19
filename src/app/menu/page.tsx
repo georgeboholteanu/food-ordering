@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import { ProductType } from "@/app/types/types";
+import { ProductType } from "@/types/types";
 import { GoMoveToTop } from "react-icons/go";
 
 // components
@@ -69,12 +69,18 @@ const Menu = () => {
 		setProductTitle(item);
 	};
 
+	const calculateGridColumns = (count: number) => {
+		return Math.min(4, count); // Ensures a maximum of 4 columns
+	};
+	// Calculate the number of columns based on the number of products
+	const gridColumns = calculateGridColumns(products.length);
+
 	return (
 		// MENU
 		<section className="mx-10 sm:mx-12 md:mx-16 lg:mx-20">
 			<div className="container mx-auto justify-center">
 				{/* SUB MENU */}
-				<div className="z-50">
+				<div className="z-50 mt-5">
 					<ul className="container mx-auto flex flex-wrap gap-2 justify-center font-semibold text-xs text-white">
 						{menuItems.map((item) => (
 							<li key={item}>
@@ -90,7 +96,9 @@ const Menu = () => {
 				</div>
 				{/* MENU CARDS */}
 				<div className="my-10 min-h-screen">
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-between">
+					<div
+						className={`grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${gridColumns} gap-4 justify-between place-items-center`}
+					>
 						{products.map((item) => (
 							<div key={item.id} className="w-full">
 								<Card

@@ -1,14 +1,13 @@
 "use client";
-import { Button } from "@/components/ui/button"  //shad cn ui custom button
-import { Input } from "@/components/ui/input";	//shad cn ui custom input
+import { Button } from "@/components/ui/button"; //shad cn ui custom button
+import { Input } from "@/components/ui/input"; //shad cn ui custom input
 import { Lock, MailIcon, ArrowRightIcon } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Logo from "../_layout/Logo";
 
 const Form = () => {
-	const [formData, setFormData] = useState({		
+	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
@@ -18,9 +17,9 @@ const Form = () => {
 	};
 
 	const isValidEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return regex.test(email);
+	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -30,14 +29,14 @@ const Form = () => {
 			toast.error("Please fill in all fields.");
 			return;
 		}
-		
+
 		if (!isValidEmail(formData.email)) {
-            toast.error("Please enter a valid email address.");
-            return;
-        }
+			toast.error("Please enter a valid email address.");
+			return;
+		}
 
 		try {
-			const response = await fetch("/api/login", {
+			const response = await fetch("/api/auth/signin", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -45,9 +44,8 @@ const Form = () => {
 				body: JSON.stringify(formData),
 			});
 
-			if (response.ok) {
-				toast.success("Email sent successfully!");
-				console.log("Email sent successfully!");
+			if (response.ok && response.status === 200) {
+				toast.success("Login successfully!");
 			} else {
 				console.error(
 					"Error login. Server returned:",
@@ -57,21 +55,18 @@ const Form = () => {
 				toast.error("Error login!");
 			}
 		} catch (error) {
-			console.error("Error email login:", error);
+			// console.error("Error email login:", error);
 			toast.error("Error email login!");
 		}
 	};
 
 	return (
-		<form className="flex flex-col gap-y-4 place-items-center" onSubmit={handleSubmit}>
-			{/* Logo */}
-			<div>
-				<h1 className="text-2xl font-bold text-center uppercase my-4">
-					<Logo containerStyles=""/>
-				</h1>
-			</div>
+		<form
+			className="flex flex-col gap-y-4 place-items-center p-4"
+			onSubmit={handleSubmit}
+		>
 			{/* input */}
-			<div className="relative flex items-center w-[300px]">
+			<div className="relative flex items-center">
 				<Input
 					type="email"
 					id="email"
@@ -82,7 +77,7 @@ const Form = () => {
 				<MailIcon className="absolute right-6" size={20} />
 			</div>
 			{/* input */}
-			<div className="relative flex items-center w-[300px]">
+			<div className="relative flex items-center ">
 				<Input
 					type="password"
 					id="password"
@@ -92,9 +87,10 @@ const Form = () => {
 				/>
 				<Lock className="absolute right-6" size={20} />
 			</div>
-			{/* input */}			
+			{/* input */}
 			<Button
-				className="flex items-center max-w-[166px] gap-x-1"
+				variant="outline"
+				className="flex items-center max-w-[166px] gap-x-1 mt-4 hover:bg-red-300/40 transition-all"
 				type="submit"
 			>
 				Login

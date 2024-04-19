@@ -20,6 +20,8 @@ type Menu = {
 	color?: string;
 }[];
 
+
+
 export const featuredProducts: Products = [
 	{
 		id: 1,

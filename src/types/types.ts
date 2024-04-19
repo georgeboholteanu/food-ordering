@@ -31,3 +31,14 @@ export type OrderType = {
 	status: string;
 	userEmail: String;
 };
+
+export type Employees = {
+	id: string;
+	createdAt: string;
+	name: string;
+	surname: string;
+	email: string;
+	password: string;
+	role: "ADMIN" | "BASIC";
+}
+

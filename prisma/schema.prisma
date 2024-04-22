@@ -65,36 +65,46 @@ model Category {
 }
 
 model Product {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  title      String   @unique
+  id         String     @id @default(cuid())
+  createdAt  DateTime   @default(now())
+  title      String     @unique
   desc       String
   img        String?
   price      Decimal
-  available  Boolean  @default(true)
-  isFeatured Boolean  @default(false)
+  available  Boolean    @default(true)
+  isFeatured Boolean    @default(false)
   options    Json[]
   catSlug    String
-  orderId    String?
-  category   Category @relation(fields: [catSlug], references: [slug])
-  order      Order?   @relation(fields: [orderId], references: [id])
+  category   Category   @relation(fields: [catSlug], references: [slug])
+  orderItems OrderItem[]
 }
 
 model Order {
-  id         String    @id @default(cuid())
-  createdAt  DateTime  @default(now())
-  totalPrice Decimal
-  status     String    @default("Waiting confirmatin from kitchen")
-  userEmail  String
-  tableSlug  String
-  table      Tables    @relation(fields: [tableSlug], references: [title])
-  user       Users     @relation(fields: [userEmail], references: [email])
-  products   Product[]
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  totalPrice  Decimal   @default(0)
+  status      String    @default("Waiting confirmation from kitchen")
+  user        Users     @relation(fields: [userId], references: [id])
+  userId      String
+  table       Tables    @relation(fields: [tableSlug], references: [title])
+  tableSlug   String
+  orderItems  OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String   
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int      @default(1)
+  subtotal  Decimal  @default(0)
+
+  @@unique([orderId, productId])
 }
 
 model Tables {
   id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
   title     String   @unique
   available Boolean  @default(true)
   orders    Order[]

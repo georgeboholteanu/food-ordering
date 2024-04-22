@@ -24,12 +24,13 @@ export type TableType = {
 };
 
 export type OrderType = {
-	id: string;
-	createdAt: string;
-	products: [];
-	totalPrice: number;
-	status: string;
-	userEmail: String;
+    id: string;
+    createdAt: string;
+    userEmail: string;
+    tableSlug: string;
+    totalPrice: number;
+    status: string;
+    orderItems: OrderItemType[];
 };
 
 export type Employees = {
@@ -40,5 +41,12 @@ export type Employees = {
 	email: string;
 	password: string;
 	role: "ADMIN" | "BASIC";
-}
+};
 
+export type OrderItemType = {
+    id: string;
+    orderId: string;
+    productId: string;
+    quantity: number;
+    subtotal: number;  // Changed to number for calculations
+};

@@ -7,8 +7,8 @@ export default function Hero() {
 		<div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
 			<div className="">
 				<Image
-					src="/home/exquisite_pasta_dish_2.png"
-					alt="Portrait"
+					src="/general/hero_image.png"
+					alt="hero image"
 					fill
 					priority
 					quality={100}
@@ -19,9 +19,9 @@ export default function Hero() {
 				/>
 			</div>
 
-			<div className="absolute w-[310px] inset-0 flex flex-col z-10 mx-auto ml-16 lg:ml-24 mb-20 justify-end">
+			<div className="absolute w-[310px] inset-0 flex flex-col z-10 mx-auto ml-16 lg:ml-72 mb-20 justify-end">
 				<div className="lg:bg-green-900/20 p-0 sm:p-6 rounded-lg">
-					<p className="hidden lg:block tracking-widest text-sm">
+					<p className="hidden lg:block tracking-widest text-sm text-white">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
 						sed do eiusmod tempor incididunt ut labore et dolore
 						magna aliqua. Magna etiam tempor orci eu. Odio morbi

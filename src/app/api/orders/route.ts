@@ -1,9 +1,10 @@
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
-
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
 	const user = auth();
+	// const { userId, sessionId, getToken } = req.auth();
 
 	if (!user) {
 		return new Response(JSON.stringify({ message: "Unauthorized" }), {
@@ -30,70 +31,70 @@ export const GET = async () => {
 	}
 };
 
-export const POST = async (req: Request) => {
-	// Read the stream as text
-	const bodyText = await req.text();
+export const POST = async (req: NextRequest, res: NextResponse) => {
+	const data = await req.json();
+	console.log("Received data:", data);
+	const { products, userEmail, tableSlug, totalPrice } = data;
 
-	// Parse the text as JSON
-	const data = JSON.parse(bodyText);
-	// return new Response(JSON.stringify(data), { status:200 });
-
-	if (data) {
-		try {
-			// Authenticate (assuming session check is needed for POST as well)
-			const user = auth();
-			if (!user) {
-				return new Response(
-					JSON.stringify({ message: "Unauthorized" }),
-					{
-						status: 401,
-					}
-				);
-			}
-
-			// Extract data from the request body
-
-			const { products, userEmail, tableSlug, totalPrice } = data;
-
-			// Validate products
-			if (!products || products.length === 0) {
-				return new Response(
-					JSON.stringify({ message: "Cart is empty" }),
-					{
-						status: 400,
-					}
-				);
-			}
-
-			// Calculate total price if not provided
-			const calculatedTotalPrice =
-				totalPrice ||
-				products.reduce(
-					(total: any, item: any) =>
-						total + item.price * item.options.quantity,
-					0
-				);
-
-			// Create the order
-			const newOrder = await prisma.order.create({
-				data: {
-					totalPrice: calculatedTotalPrice,
-					products: {
-						create: products,
-					},
-					status: "Waiting confirmation from kitchen",
-					userEmail,
-					tableSlug,
-				},
-			});
-
-			return new Response(JSON.stringify(newOrder), { status: 201 });
-		} catch (error) {
-			console.error("Error placing order:", error);
-			return new Response(
-				JSON.stringify({ message: "Something went wrong" }),
-				{ status: 500 }
+	try {
+		// Authenticate the user
+		const { userId } = auth();
+		console.log(userId)
+		if (!userId) {
+			return new NextResponse(
+				JSON.stringify({ message: "Unauthorized" }),
+				{
+					status: 401,
+				}
 			);
 		}
+
+		// Retrieve user details
+		const user = await prisma.users.findUnique({
+			where: { email: userEmail },
+		});
+		console.log(user)
+
+		if (!user) {
+			return new NextResponse(
+				JSON.stringify({ message: "User not found" }),
+				{
+					status: 404,
+				}
+			);
+		}
+
+
+		// Create the order
+		const newOrder = await prisma.order.create({
+			data: {				
+				totalPrice: parseFloat(totalPrice),
+				status: "Waiting confirmation from kitchen",
+				user: {
+					connect: { id: user.id },
+				},
+				table: {
+					connect: { title: tableSlug },
+				},
+				orderItems: {
+					create: products.map((product:any) => ({
+						productId: product.productId,
+						quantity: product.quantity,
+						subtotal: parseFloat(product.price) * product.quantity,
+					})),
+				},
+			},
+			include: {
+				orderItems: true,
+			},
+		});
+
+		return new Response(JSON.stringify(newOrder), { status: 201 });
+	} catch (error) {
+		console.error("Error placing order:", error);
+		return new Response(
+			JSON.stringify({ message: "Something went wrong" }),
+			{ status: 500 }
+		);
 	}
 };

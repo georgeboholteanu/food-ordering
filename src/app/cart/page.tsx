@@ -5,11 +5,12 @@ import { CgRemove } from "react-icons/cg";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { auth } from "@clerk/nextjs/server";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 const Cart = () => {
 	const [cart, setCart] = useState<ProductType[]>([]);
-	const user = auth();
+	const { isSignedIn, user } = useUser();
+	const { getToken } = useAuth();
 
 	const incrementProduct = (prod: ProductType) => {
 		const cartItemsRaw = localStorage.getItem("cartItems");
@@ -130,24 +131,57 @@ const Cart = () => {
 	// 	}
 	// };
 
-	const placeOrder = () => {
+	const placeOrder = async () => {
 		const cartItemsRaw = localStorage.getItem("cartItems");
-		const cartItems = cartItemsRaw
-			? JSON.parse(cartItemsRaw)
-			: { products: [] };
-
-		console.log(cartItems);
-
-		// check if cartItems variable exist in local storage
-
-		if (cartItems.products.length === 0 || !cartItems) {
+		const cartItems = cartItemsRaw ? JSON.parse(cartItemsRaw) : { products: [] };
+	
+		if (!isSignedIn) {
+			toast.error("Please log in to place an order.");
+			return;
+		}
+	
+		if (cartItems.products.length === 0) {
 			toast.error("Your cart is empty!");
-		} else {
-			toast.success("Order has been placed successfully!");
-			localStorage.removeItem("cartItems");
-			setCart([]);
+			return;
+		}
+		console.log(user)
+		console.log(cartItems)
+
+
+		try {
+			const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+			const response = await fetch(`${apiUrl}/api/orders`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${await getToken()}` // Ensure you're passing the authentication token
+				},
+				body: JSON.stringify({
+					products: cartItems.products.map((prod:ProductType) => ({
+						productId: prod.id,
+						price: prod.price,
+						quantity: prod.options.quantity
+					})),
+					userEmail: user.primaryEmailAddress?.emailAddress, // Assuming `user` object has email
+					tableSlug: "takeaway", // Assuming this is needed for your order
+					totalPrice: cartItems.products.reduce((total: any, item:any) => total + item.price * item.options.quantity, 0).toFixed(2)
+				}),
+			});
+	
+			if (response.ok) {
+				const responseData = await response.json();
+				toast.success("Order has been placed successfully!");
+				localStorage.removeItem("cartItems");
+				setCart([]); // Clear the cart in state
+			} else {
+				throw new Error('Failed to place the order.');
+			}
+		} catch (error) {
+			console.error("Error placing order:", error);
+			toast.error("Something went wrong. Please try again.");
 		}
 	};
+	
 
 	const emptyCart = () => {
 		localStorage.removeItem("cartItems");

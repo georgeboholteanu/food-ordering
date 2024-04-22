@@ -3,10 +3,10 @@ import { Inter, Alata } from "next/font/google";
 
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import { ClerkProvider } from "@clerk/nextjs";
 
 // components
 import Header from "@/components/_layout/Header";
-import AuthProvider from "@/components/AuthProvider";
 import Footer from "@/components/_layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,28 +16,27 @@ export const metadata: Metadata = {
 	description: "Exquisite dishes a la carte",
 };
 
-
 export default function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className="alata-regular">
-				<AuthProvider>
+		<ClerkProvider>
+			<html lang="en">
+				<body className="alata-regular">
 					<Header />
 					<ToastContainer
 						autoClose={2000}
 						draggable={false}
-						closeButton={false}						
+						closeButton={false}
 						position="bottom-right"
 						style={{ bottom: "20px" }}
 					/>
 					{children}
 					<Footer />
-				</AuthProvider>
-			</body>
-		</html>
+				</body>
+			</html>
+		</ClerkProvider>
 	);
 }

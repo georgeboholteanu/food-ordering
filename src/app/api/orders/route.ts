@@ -1,10 +1,11 @@
-import { getAuthSession } from "@/app/api/auth/[...nextauth]/options";
 import { prisma } from "@/utils/connectPrisma";
+import { auth } from "@clerk/nextjs/server";
+
 
 export const GET = async () => {
-	const session = await getAuthSession();
+	const user = await auth();
 
-	if (!session) {
+	if (!user) {
 		return new Response(JSON.stringify({ message: "Unauthorized" }), {
 			status: 401,
 		});
@@ -40,8 +41,8 @@ export const POST = async (req: Request) => {
 	if (data) {
 		try {
 			// Authenticate (assuming session check is needed for POST as well)
-			const session = await getAuthSession();
-			if (!session) {
+			const user = await auth();
+			if (!user) {
 				return new Response(
 					JSON.stringify({ message: "Unauthorized" }),
 					{

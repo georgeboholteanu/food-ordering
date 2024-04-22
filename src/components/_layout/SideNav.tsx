@@ -1,5 +1,5 @@
 import React from "react";
-import UserLinks from "./UserLinks";
+import UserLinks from "../UserLinks";
 import { ShoppingBasket } from "lucide-react";
 
 import Link from "next/link";

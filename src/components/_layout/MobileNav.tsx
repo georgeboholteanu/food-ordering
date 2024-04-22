@@ -5,7 +5,7 @@ import { AlignJustify } from "lucide-react";
 import Navbar from "./Navbar";
 import Logo from "./Logo";
 import Socials from "./Socials";
-import SideNav from "../SideNav";
+import SideNav from "./SideNav";
 
 const MobileNav = () => {
 	return (
@@ -21,7 +21,7 @@ const MobileNav = () => {
 							containerStyles="flex flex-col items-center gap-y-6 pt-20 pb-10"
 							linkStyles="text-lg text-black"
 						/>
-						<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 pt-20 pb-20 text-black text-lg"/>
+						<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 pt-20 pb-20 text-black text-lg" />
 						<Socials containerStyles="flex justify-center gap-x-4" />
 					</div>
 				</div>

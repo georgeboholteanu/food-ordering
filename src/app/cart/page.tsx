@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
 
 const Cart = () => {
-	const session = useSession();
+	// const session = useSession();
 	const [cart, setCart] = useState<ProductType[]>([]);
 
 	const incrementProduct = (prod: ProductType) => {

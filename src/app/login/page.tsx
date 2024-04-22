@@ -1,27 +1,12 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { signIn } from "next-auth/react";
+import React from "react";
 import Image from "next/image";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import AuthForm from "@/components/login/AuthForm";
 import Logo from "@/components/_layout/Logo";
 function Login() {
-	const { data, status } = useSession();
-	const router = useRouter();
-	console.log("data: " + data);
-	console.log("status: " + status);
-
-	useEffect(() => {
-		if (status === "authenticated") {
-			router.push("/"); //navigate to home page
-		}
-	}, [status, router]);
-
-	if (status === "loading") {
-		return <p>Loading...</p>;
-	}
 
 	return (
 		<section className="sm:w-[1200px] sm:h-[70svh] m-5">

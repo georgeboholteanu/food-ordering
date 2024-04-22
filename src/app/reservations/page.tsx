@@ -1,25 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { TableType } from "@/types/types";
+import Image from "next/image";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
+import { TableType } from "@/types/types";
 
 const Reservations = () => {
+	const { user } = useUser(); // Call useUser at the top level
 	const [tables, setTables] = useState<TableType[]>([]);
-	// const session = useSession();
-	// Fetch table data from API
-	const fetchTables = async () => {
-		try {
-			const apiUrl =
-				process.env.NEXT_PUBLIC_ENV === "development"
-					? process.env.NEXT_PUBLIC_API_URL_DEV
-					: process.env.NEXT_PUBLIC_API_URL_PROD;
-			const response = await fetch(`${apiUrl}/api/tables`, {
-				cache: "no-cache", //for development only
-			});
 
+	const fetchTables = async () => {
+		const apiUrl =
+			process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"; // Simplified API URL logic
+		try {
+			const response = await fetch(`${apiUrl}/api/tables`, {
+				cache: "no-cache",
+			});
 			const data = await response.json();
 			const sortedData = data.sort((a: any, b: any) =>
 				a.title.localeCompare(b.title)
@@ -35,47 +32,34 @@ const Reservations = () => {
 	}, [tables]);
 
 	const handleBooking = async (tableName: string) => {
-		if (true == true) {
-			// if (session.status === "authenticated") {
+		if (user) {
 			try {
-				// Assuming you have an API endpoint to handle booking status changes
-				const apiUrl =
-					process.env.NEXT_PUBLIC_ENV === "development"
-						? process.env.NEXT_PUBLIC_API_URL_DEV
-						: process.env.NEXT_PUBLIC_API_URL_PROD;
-				const response = await fetch(
-					`${apiUrl}/api/reservations?tablen=${tableName}`,
-					{
-						method: "GET",
-						headers: {
-							"Content-Type": "application/json",
-						},
-					}
-				);
-
+				const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+				const response = await fetch(`${apiUrl}/api/reservations?tablen=${tableName}`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+	
 				if (response.ok) {
-					// Update the local state based on the response
-					setTables((prevTables) => {
-						const updatedTables = [...prevTables];
-						return updatedTables;
-					});
-					if (response.status === 200) {
-						toast.success(
-							`${tableName} has been reserved successfully.`
-						);
-					} else {
-						toast.error(`${tableName} could not be reserved.`);
-					}
+					const updatedTable = await response.json(); // Ensure this contains the latest table info
+					setTables(prevTables => prevTables.map(table => 
+						table.id === updatedTable.id ? {...table, ...updatedTable} : table
+					));
+					toast.success(`${tableName} has been reserved successfully.`);
 				} else {
-					console.error("Failed to update booking status");
+					toast.error(await response.text());
 				}
 			} catch (error) {
 				console.error("Error updating booking status:", error);
+				toast.error("Error updating booking status.");
 			}
 		} else {
 			toast.error("Please login to make reservations");
 		}
 	};
+	
 
 	return (
 		<div>
@@ -119,9 +103,9 @@ const Reservations = () => {
 													? "bg-green-500/30 hover:bg-green-400/20"
 													: "bg-red-500/30 hover:bg-red-400/30}"
 											}`}
-											onClick={() =>
-												handleBooking(table.title)
-											}
+											onClick={() => {
+												handleBooking(table.title);												
+											}}
 										>
 											{table.available
 												? "Book Now"

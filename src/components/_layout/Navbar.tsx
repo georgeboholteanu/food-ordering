@@ -1,7 +1,4 @@
-import { useState } from "react";
 import Link from "next/link";
-import { FaCartArrowDown } from "react-icons/fa6";
-import UserLinks from "../UserLinks";
 import styles from "./styles.module.css"
 
 type NavbarProps = {
@@ -14,7 +11,6 @@ const links = [
 	{ path: "/", name: "HOME" },	
 	{ path: "/menu", name: "MENU" },
 	{ path: "/reservations", name: "RESERVATIONS" },
-	{ path: "/contact", name: "CONTACT" },
 ];
 
 const Navbar: React.FC<NavbarProps> = ({

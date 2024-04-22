@@ -5,11 +5,11 @@ import { CgRemove } from "react-icons/cg";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSession } from "next-auth/react";
+import { auth } from "@clerk/nextjs/server";
 
 const Cart = () => {
-	// const session = useSession();
 	const [cart, setCart] = useState<ProductType[]>([]);
+	const user = auth();
 
 	const incrementProduct = (prod: ProductType) => {
 		const cartItemsRaw = localStorage.getItem("cartItems");

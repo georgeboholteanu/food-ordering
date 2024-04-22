@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Alata } from "next/font/google";
+// import { Inter, Alata } from "next/font/google";
+import local from 'next/font/local';
 
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
@@ -9,7 +10,23 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/_layout/Header";
 import Footer from "@/components/_layout/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
+const alata = local({
+	src:[{
+		path: "../../public/fonts/Alata/Alata-Regular.ttf",
+		weight: '400',
+		style: 'normal'
+	}],
+	variable: "--font-alata",
+})
+const roboto = local({
+	src:[{
+		path: "../../public/fonts/Roboto/Roboto-Bold.ttf",
+		weight: '700',
+		style: 'normal'
+	}],
+	variable: "--font-roboto",
+}) 
 
 export const metadata: Metadata = {
 	title: "Welcome to Cucina Autentica",
@@ -24,7 +41,7 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className="alata-regular">
+				<body className={`${roboto.variable}`}>
 					<Header />
 					<ToastContainer
 						autoClose={2000}

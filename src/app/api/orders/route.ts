@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 
 
 export const GET = async () => {
-	const user = await auth();
+	const user = auth();
 
 	if (!user) {
 		return new Response(JSON.stringify({ message: "Unauthorized" }), {
@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
 	if (data) {
 		try {
 			// Authenticate (assuming session check is needed for POST as well)
-			const user = await auth();
+			const user = auth();
 			if (!user) {
 				return new Response(
 					JSON.stringify({ message: "Unauthorized" }),

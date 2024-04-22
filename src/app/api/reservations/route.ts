@@ -1,9 +1,17 @@
 import { prisma } from "@/utils/connectPrisma";
+import { auth } from "@clerk/nextjs/server";
 
 export const GET = async (req: Request) => {
+	const user = auth();
 	const { searchParams } = new URL(req.url);
 	const tablen = searchParams.get("tablen");
 
+	if (!user.userId) {
+		return new Response(JSON.stringify({ message: "Unauthorized" }), {
+			status: 401,
+		});
+	}
+	
 	try {
 		const table = await prisma.tables.findUnique({
 			where: {
@@ -38,7 +46,7 @@ export const GET = async (req: Request) => {
 		} else {
 			// Return a message indicating that the table was not found
 			return new Response(
-				JSON.stringify({ message: `${tablen} not` }),
+				JSON.stringify({ message: `${tablen} not found` }),
 				{ status: 404 }
 			);
 		}

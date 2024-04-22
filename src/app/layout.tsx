@@ -10,7 +10,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/_layout/Header";
 import Footer from "@/components/_layout/Footer";
 
-// const inter = Inter({ subsets: ["latin"] });
 const alata = local({
 	src:[{
 		path: "../../public/fonts/Alata/Alata-Regular.ttf",

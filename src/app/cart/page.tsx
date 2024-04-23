@@ -76,60 +76,6 @@ const Cart = () => {
 		setCart(cartItems.products);
 	}, []);
 
-	// WIP login to be fixed
-	// const placeOrder = async () => {
-	// 	const cartItemsRaw = localStorage.getItem("cartItems");
-	// 	const cartItems = cartItemsRaw
-	// 		? JSON.parse(cartItemsRaw)
-	// 		: { products: [] };
-
-	// 	if (cartItems.products.length === 0) {
-	// 		toast.error("Your cart is empty!");
-	// 		return;
-	// 	} else if (
-	// 		cartItems.products.length > 0 &&
-	// 		session.status === "authenticated"
-	// 	) {
-	// 		try {
-	// 			const apiUrl =
-	// 				process.env.NEXT_PUBLIC_ENV === "development"
-	// 					? process.env.NEXT_PUBLIC_API_URL_DEV
-	// 					: process.env.NEXT_PUBLIC_API_URL_PROD;
-
-	// 			const response = await fetch(`${apiUrl}/api/orders`, {
-	// 				method: "POST",
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 				},
-	// 				body: JSON.stringify({
-	// 					products: cartItems.products,
-	// 					userEmail: "emailtest@gmail.com",
-	// 					tableSlug: "table1",
-	// 					totalPrice: cartItems.products
-	// 						.reduce(
-	// 							(total: any, item: any) =>
-	// 								total + item.price * item.options.quantity,
-	// 							0
-	// 						)
-	// 						.toFixed(2),
-	// 				}),
-	// 			});
-
-	// 			if (response.ok) {
-	// 				toast.success("Order has been placed successfully!");
-	// 				console.log(await response.json());
-	// 				localStorage.removeItem("cartItems");
-	// 			} else {
-	// 				toast.error("Failed to place the order. Please try again.");
-	// 			}
-	// 		} catch (error) {
-	// 			console.error("Error placing order:", error);
-	// 			toast.error("Something went wrong. Please try again.");
-	// 		}
-	// 	} else {
-	// 		toast.error("Please login to make an order.");
-	// 	}
-	// };
 
 	const placeOrder = async () => {
 		const cartItemsRaw = localStorage.getItem("cartItems");
@@ -144,8 +90,8 @@ const Cart = () => {
 			toast.error("Your cart is empty!");
 			return;
 		}
-		console.log(user)
-		console.log(cartItems)
+		// console.log(user)
+		// console.log(cartItems)
 
 
 		try {

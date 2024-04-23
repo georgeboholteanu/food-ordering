@@ -56,6 +56,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		});
 		console.log(user)
 
+		// Check if user exists otherwise return error
 		if (!user) {
 			return new NextResponse(
 				JSON.stringify({ message: "User not found" }),

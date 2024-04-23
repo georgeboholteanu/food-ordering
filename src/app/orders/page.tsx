@@ -1,6 +1,14 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { OrderType } from "@/types/types";
+import { OrderItemType, OrderType } from "@/types/types";
+
+interface GroupedOrder {
+    orderId: string;
+    products: OrderItemType[];
+    total: number;
+}
+
+type GroupedOrdersMap = Record<string, GroupedOrder>;
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 const getData = async () => {
@@ -27,46 +35,50 @@ const getOrderProducts = async () => {
 };
 
 const Orders = () => {
-	const [userOrders, setUserOrders] = useState<OrderType[]>([]);
+	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([])
+	const [totalsByOrderId, setTotalsByOrderId] = useState<Record<string, number>>({});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// const ordersData: OrderType[] = await getData();
-				const orderedProductsData = await getOrderProducts();
+				const orderItemsData: OrderItemType[] =
+					await getOrderProducts();
 
-				// Group orders by orderId
-				const groupedByOrderId = orderedProductsData.reduce(
+				const groupedOrders: GroupedOrdersMap = orderItemsData.reduce(
 					(acc: any, item: any) => {
 						// Check if there is already an entry for the orderId
-						const existingOrder = acc.find(
-							(order: any) => order.orderId === item.orderId
-						);
-
-						if (existingOrder) {
-							// If the order already exists, just add the product to the products array
-							existingOrder.products.push({
-								productId: item.productId,
-							});
-						} else {
-							// Otherwise, create a new order entry with the products array
-							acc.push({
+						if (!acc[item.orderId]) {
+							acc[item.orderId] = {
 								orderId: item.orderId,
-								createdAt: item.createdAt,
-								status: item.status,
-								tableSlug: item.tableSlug,
-								totalPrice: item.totalPrice,
-								products: [{ productId: item.productId }],
-							});
+								products: [],
+								total: 0,
+							};
 						}
+
+						// Add the product to the products array
+						acc[item.orderId].products.push({
+							productId: item.productId,
+							quantity: item.quantity,
+							subtotal: parseFloat(item.subtotal),
+						});
+
+						// Sum up the subtotal
+						acc[item.orderId].total += parseFloat(item.subtotal);
 
 						return acc;
 					},
-					[]
+					{}
 				);
 
-				setUserOrders(groupedByOrderId);
-				console.log("orders:", groupedByOrderId);
+				setUserOrders(Object.values(groupedOrders));
+				setTotalsByOrderId(
+					Object.fromEntries(
+						Object.entries(groupedOrders).map(([key, value]) => [
+							key,
+							value.total,
+						])
+					)
+				);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
@@ -82,34 +94,37 @@ const Orders = () => {
 					<tr>
 						<th className="px-6 py-3 text-left">Order Id</th>
 						<th className="px-6 py-3 text-left">Date</th>
-						<th className="px-6 py-3 text-left">Price</th>
 						<th className="px-6 py-3 text-left">Products</th>
-						<th className="px-6 py-3 text-left">Status</th>
+						<th className="px-6 py-3 text-left">Cost</th>
 					</tr>
 				</thead>
 				<tbody>
-					{orders.map((order) => (
+					{userOrders.map((order) => (
 						<tr
-							key={order.id}
+							key={order.orderId}
 							className="bg-white border-b border-gray-200"
 						>
 							<td className="px-6 py-4 whitespace-nowrap">
-								{order.id}
+								{order.orderId}
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap flex gap-4">
-								<span className="border-r-2 px-2">
-									{/* {order.createdAt.substring(0, 10)} */}
-								</span>
-								{/* <span>{order.createdAt.substring(11, 19)}</span> */}
+								{/* Dates and other details to be inserted here */}
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap">
-								{order.totalPrice}
+								<ul>
+									{order.products.map((product) => (
+										<li
+											key={product.productId}
+											className="text-xs"
+										>
+											{product.productId} <b>X</b>{" "}
+											{product.quantity}
+										</li>
+									))}
+								</ul>
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap">
-								{order.products.length}
-							</td>
-							<td className="px-6 py-4 whitespace-nowrap">
-								{/* {order.status} */}
+								£{totalsByOrderId[order.orderId].toFixed(2)}
 							</td>
 						</tr>
 					))}

@@ -18,7 +18,7 @@ const UserLinks = () => {
 					<button
 						className={`transition-all ${styles.customUnderline}`}
 					>
-						<Link href="/orders">ORDERS</Link>
+						<Link href="/orders">MY ORDERS</Link>
 					</button>
 				</div>
 			</SignedIn>

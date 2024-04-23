@@ -1,5 +1,6 @@
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
 	const user = auth();
@@ -9,7 +10,7 @@ export const GET = async () => {
 			status: 401,
 		});
 	}
-	
+
 	try {
 		const orders = await prisma.order.findMany();
 
@@ -29,20 +30,23 @@ export const GET = async () => {
 	}
 };
 
-export const POST = async (req: Request) => {
+export const POST = async (req: NextRequest) => {
 	// Read the stream as text
-	const bodyText = await req.text();
+	// const bodyText = await req.text();
 
 	// Parse the text as JSON
-	const data = JSON.parse(bodyText);
+	// const data = JSON.parse(bodyText);
 	// return new Response(JSON.stringify(data), { status:200 });
+	const data = await req.json();
 
 	if (data) {
 		try {
-			// Authenticate (assuming session check is needed for POST as well)
-			const user = await auth();
-			if (!user) {
-				return new Response(
+			// Authenticate the user
+			const { userId } = auth();
+			console.log(userId);
+			
+			if (!userId) {
+				return new NextResponse(
 					JSON.stringify({ message: "Unauthorized" }),
 					{
 						status: 401,
@@ -56,7 +60,7 @@ export const POST = async (req: Request) => {
 
 			// Validate products
 			if (!products || products.length === 0) {
-				return new Response(
+				return new NextResponse(
 					JSON.stringify({ message: "Cart is empty" }),
 					{
 						status: 400,
@@ -77,19 +81,19 @@ export const POST = async (req: Request) => {
 			const newOrder = await prisma.order.create({
 				data: {
 					totalPrice: calculatedTotalPrice,
-					products: {
+					orderItems: {
 						create: products,
 					},
 					status: "Waiting confirmation from kitchen",
-					userEmail,
+					userId: userId,
 					tableSlug,
 				},
 			});
 
-			return new Response(JSON.stringify(newOrder), { status: 201 });
+			return new NextResponse(JSON.stringify(newOrder), { status: 201 });
 		} catch (error) {
 			console.error("Error placing order:", error);
-			return new Response(
+			return new NextResponse(
 				JSON.stringify({ message: "Something went wrong" }),
 				{ status: 500 }
 			);

@@ -1,3 +1,4 @@
+// npm install --save-dev typescript
 // tsc src/utils/createEntries.ts && node src/utils/createEntries.js
 
 import { prisma } from "./connectPrisma";
@@ -188,7 +189,7 @@ const createProductsEntries = async () => {
 					title: "Rosemary Lemonade",
 					desc: "A fresh twist on the classic, our homemade lemonade infused with fragrant rosemary sprigs, for a touch of herbal sweetness.",
 					price: "6.5",
-					img: "/products/rosemary-lemonade.webp",
+					img: "/products/rosemary-lemonade.png",
 					available: true,
 					catSlug: "drinks",
 				},
@@ -196,7 +197,7 @@ const createProductsEntries = async () => {
 					title: "Blood Orange Mojito",
 					desc: "A tropical twist on the mojito, featuring muddled blood oranges, mint leaves, and rum, for a vibrant and citrusy cocktail.",
 					price: "8.99",
-					img: "/products/blood-orange-mojito.webp",
+					img: "/products/blood-orange-mojito.png",
 					available: true,
 					catSlug: "drinks",
 				},
@@ -204,7 +205,7 @@ const createProductsEntries = async () => {
 					title: "Spiced Iced Coffee",
 					desc: "A smooth and creamy iced coffee infused with warm spices like cardamom and cinnamon, for a comforting and flavorful pick-me-up.",
 					price: "5.5",
-					img: "/products/spiced-iced-coffee.webp",
+					img: "/products/spiced-iced-coffee.png",
 					available: true,
 					catSlug: "drinks",
 				},
@@ -267,6 +268,9 @@ const createTablesEntries = async () => {
 				},
 				{
 					title: "table8",
+				},
+				{
+					title: "takeaway",
 				},
 			],
 		});

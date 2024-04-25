@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 type logoProps = {
-	containerStyles: string;
+	containerStyles?: string;
 };
 
 const Logo: React.FC<logoProps> = ({ containerStyles }) => {

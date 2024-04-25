@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import { OrderItemType, OrderType } from "@/types/types";
+import React, { useEffect, useState } from "react";
+import { OrderItemType } from "@/types/types";
 
 interface GroupedOrder {
 	orderId: string;
-	products: OrderItemType[];
-	createdAt: Date;
+	products: OrderItemType[];	
 	total: number;
 }
 

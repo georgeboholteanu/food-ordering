@@ -20,7 +20,7 @@ const Cart = () => {
 
 		// Find the index of the product in the products array
 		const index = cartItems.products.findIndex(
-			(item: ProductType) => item.title === prod.title
+			(item: ProductType) => item.id === prod.id
 		);
 
 		if (index !== -1) {
@@ -60,7 +60,7 @@ const Cart = () => {
 			if (cartItems.products[index].options.quantity - 1 === 0) {
 				// If quantity is reduced to zero, create a new array without the item
 				cartItems.products = cartItems.products.filter(
-					(item: ProductType) => item.title !== prod.title
+					(item: ProductType) => item.id !== prod.id
 				);
 			} else {
 				// Otherwise, update the quantity
@@ -91,12 +91,12 @@ const Cart = () => {
 			return;
 		}
 		// console.log(user)
-		// console.log(cartItems)
+		console.log(cartItems)
 
 
 		try {
 			const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-			const response = await fetch(`${apiUrl}/api/orders`, {
+			const response = await fetch(`${apiUrl}/api/orders/ordered-items`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -105,17 +105,19 @@ const Cart = () => {
 				body: JSON.stringify({
 					products: cartItems.products.map((prod:ProductType) => ({
 						productId: prod.id,
-						price: prod.price,
+						productTitle: prod.title,	
+						productPrice: prod.price,					
 						quantity: prod.options.quantity
 					})),
 					userEmail: user.primaryEmailAddress?.emailAddress, // Assuming `user` object has email
-					tableSlug: "takeaway", // Assuming this is needed for your order
+					tableSlug: "takeaway", 
 					totalPrice: cartItems.products.reduce((total: any, item:any) => total + item.price * item.options.quantity, 0).toFixed(2)
 				}),
 			});
 	
 			if (response.ok) {
 				const responseData = await response.json();
+				console.log(responseData);
 				toast.success("Order has been placed successfully!");
 				localStorage.removeItem("cartItems");
 				setCart([]); // Clear the cart in state

@@ -97,12 +97,13 @@ model OrderItem {
   orderId      String
   order        Order    @relation(fields: [orderId], references: [id])
   productId    String
-  product      Product  @relation(fields: [productId, productTitle], references: [id, title])
+  product      Product  @relation(fields: [productId], references: [id])
   productTitle String
+  productPrice Decimal  @default(0)
   quantity     Int      @default(1)
   subtotal     Decimal  @default(0)
 
-  @@unique([orderId, productId, productTitle])
+  @@unique([orderId, productId])
 }
 
 model Tables {

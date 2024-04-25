@@ -1,4 +1,5 @@
 "use strict";
+// npm install --save-dev typescript
 // tsc src/utils/createEntries.ts && node src/utils/createEntries.js
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }

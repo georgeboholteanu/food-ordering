@@ -26,10 +26,10 @@ export type TableType = {
 export type OrderType = {
     id: string;
     createdAt: string;
-    userEmail: string;
-    tableSlug: string;
     totalPrice: number;
     status: string;
+    userId: string;
+    tableSlug: string;
     orderItems: OrderItemType[];
 };
 
@@ -47,6 +47,8 @@ export type OrderItemType = {
     id: string;
     orderId: string;
     productId: string;
+	productTitle: string;
+	productPrice: number;
     quantity: number;
     subtotal: number;  // Changed to number for calculations
 };

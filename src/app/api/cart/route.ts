@@ -31,20 +31,15 @@ export const GET = async () => {
 };
 
 export const POST = async (req: NextRequest) => {
-	// Read the stream as text
-	// const bodyText = await req.text();
-
-	// Parse the text as JSON
-	// const data = JSON.parse(bodyText);
-	// return new Response(JSON.stringify(data), { status:200 });
 	const data = await req.json();
+	console.log("Received data:", data);
 
 	if (data) {
 		try {
 			// Authenticate the user
 			const { userId } = auth();
 			console.log(userId);
-			
+
 			if (!userId) {
 				return new NextResponse(
 					JSON.stringify({ message: "Unauthorized" }),
@@ -53,10 +48,14 @@ export const POST = async (req: NextRequest) => {
 					}
 				);
 			}
-
 			// Extract data from the request body
-
 			const { products, userEmail, tableSlug, totalPrice } = data;
+
+			// Retrieve user details
+			const user = await prisma.users.findUnique({
+				where: { email: userEmail },
+			});
+			console.log(user);
 
 			// Validate products
 			if (!products || products.length === 0) {
@@ -79,14 +78,22 @@ export const POST = async (req: NextRequest) => {
 
 			// Create the order
 			const newOrder = await prisma.order.create({
+				// data: {
+				// 	totalPrice: calculatedTotalPrice,
+				// 	orderItems: {
+				// 		create: products,
+				// 	},
+				// 	userId: userId,
+				// 	tableSlug,
+				// },
 				data: {
 					totalPrice: calculatedTotalPrice,
+					status: "Waiting confirmation from kitchen",
+					userId: userId,
+					tableSlug:tableSlug,
 					orderItems: {
 						create: products,
 					},
-					status: "Waiting confirmation from kitchen",
-					userId: userId,
-					tableSlug,
 				},
 			});
 

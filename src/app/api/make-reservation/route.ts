@@ -1,13 +1,15 @@
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: Request) => {
+export const GET = async (req:NextRequest) => {
 	const user = auth();
 	const { searchParams } = new URL(req.url);
 	const tablen = searchParams.get("tablen");
 
+	
 	if (!user.userId) {
-		return new Response(JSON.stringify({ message: "Unauthorized" }), {
+		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
 			status: 401,
 		});
 	}
@@ -32,26 +34,26 @@ export const GET = async (req: Request) => {
 					},
 				});
 
-				return new Response(
+				return new NextResponse(
 					JSON.stringify({ message: `Table has been reserved` }),
 					{ status: 200 }
 				);
 			} else {
 				// Return a message indicating the table is already busy
-				return new Response(
+				return new NextResponse(
 					JSON.stringify({ message: `${tablen} is already busy` }),
 					{ status: 201 }
 				);
 			}
 		} else {
 			// Return a message indicating that the table was not found
-			return new Response(
+			return new NextResponse(
 				JSON.stringify({ message: `${tablen} not found` }),
 				{ status: 404 }
 			);
 		}
 	} catch (error) {
-		return new Response(
+		return new NextResponse(
 			JSON.stringify({ message: "Something went wrong" }),
 			{ status: 500 }
 		);

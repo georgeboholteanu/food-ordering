@@ -6,11 +6,13 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const Cart = () => {
 	const [cart, setCart] = useState<ProductType[]>([]);
 	const { isSignedIn, user } = useUser();
 	const { getToken } = useAuth();
+	const router = useRouter();
 
 	const incrementProduct = (prod: ProductType) => {
 		const cartItemsRaw = localStorage.getItem("cartItems");
@@ -121,6 +123,7 @@ const Cart = () => {
 				toast.success("Order has been placed successfully!");
 				localStorage.removeItem("cartItems");
 				setCart([]); // Clear the cart in state
+				router.push("/my-orders");
 			} else {
 				throw new Error('Failed to place the order.');
 			}

@@ -58,7 +58,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		console.log("Current user:", currentUser);
 
         if (!currentUser) {
-            return new Response(
+            return new NextResponse(
                 JSON.stringify({ message: "User not found" }),
                 { status: 404 }
             );
@@ -91,10 +91,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             },
         });
 
-        return new Response(JSON.stringify(newOrder), { status: 201 });
+        return new NextResponse(JSON.stringify(newOrder), { status: 201 });
     } catch (error) {
         console.error("Error placing order:", error);
-        return new Response(
+        return new NextResponse(
             JSON.stringify({ message: "Something went wrong" }),
             { status: 500 }
         );

@@ -24,13 +24,13 @@ export type TableType = {
 };
 
 export type OrderType = {
-    id: string;
-    createdAt: string;
-    totalPrice: number;
-    status: string;
-    userId: string;
-    tableSlug: string;
-    orderItems: OrderItemType[];
+	id: string;
+	createdAt: string;
+	totalPrice: number;
+	status: string;
+	userId: string;
+	tableSlug: string;
+	orderItems: OrderItemType[];
 };
 
 export type Employees = {
@@ -44,11 +44,19 @@ export type Employees = {
 };
 
 export type OrderItemType = {
-    id: string;
-    orderId: string;
-    productId: string;
+	id: string;
+	orderId: string;
+	productId: string;
 	productTitle: string;
 	productPrice: number;
-    quantity: number;
-    subtotal: number;  // Changed to number for calculations
+	quantity: number;
+	subtotal: number; // Changed to number for calculations
+};
+
+export type FilteredProductsType = {
+	productId: string;
+	productTitle: string;
+	productPrice: string;
+	quantity: number;
+	subtotal: number;
 };

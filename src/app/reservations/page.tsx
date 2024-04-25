@@ -14,7 +14,7 @@ const Reservations = () => {
 		const apiUrl =
 			process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"; // Simplified API URL logic
 		try {
-			const response = await fetch(`${apiUrl}/api/tables`, {
+			const response = await fetch(`${apiUrl}/api/get-tables`, {
 				cache: "no-cache",
 			});
 			const data = await response.json();
@@ -35,7 +35,7 @@ const Reservations = () => {
 		if (user) {
 			try {
 				const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-				const response = await fetch(`${apiUrl}/api/reservations?tablen=${tableName}`, {
+				const response = await fetch(`${apiUrl}/api/make-reservation?tablen=${tableName}`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
@@ -67,7 +67,8 @@ const Reservations = () => {
 				RESERVATIONS
 			</h2>
 			<div className="container mx-auto p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-				{tables.map((table) => (
+				{
+				tables.map((table) => (
 					<div className="m-2 flex flex-col" key={table.id}>
 						<div>
 							<div className="w-full p-10 border border-red-500/30 rounded-xl bg-gray-300 shadow-inner">

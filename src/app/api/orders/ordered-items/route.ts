@@ -7,7 +7,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const user = auth();
-	const { userId, sessionId, getToken } = auth();
     const { searchParams } = new URL(req.url);
 	const id = searchParams.get("id");
 

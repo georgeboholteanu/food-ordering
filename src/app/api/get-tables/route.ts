@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
 	const user = auth();
@@ -12,23 +12,18 @@ export const GET = async () => {
 	}
 
 	try {
-		const orders = await prisma.order.findMany();
-		console.log(orders)
-
-		if (orders.length > 0) {
-			return new NextResponse(JSON.stringify(orders), { status: 200 });
-		} else {
-			return new NextResponse(
-				JSON.stringify({ message: "No orders found" }),
-				{ status: 404 }
-			);
-		}
+		const tables = await prisma.tables.findMany({
+			where: {
+				title: {
+					not: "takeaway",
+				},
+			},
+		});
+		return new Response(JSON.stringify(tables), { status: 200 });
 	} catch (error) {
-		return new NextResponse(
+		return new Response(
 			JSON.stringify({ message: "Something went wrong" }),
 			{ status: 500 }
 		);
 	}
 };
-
-

@@ -3,9 +3,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { OrderItemType, OrderType } from "@/types/types";
 
 interface GroupedOrder {
-    orderId: string;
-    products: OrderItemType[];
-    total: number;
+	orderId: string;
+	products: OrderItemType[];
+	createdAt: Date;
+	total: number;
 }
 
 type GroupedOrdersMap = Record<string, GroupedOrder>;
@@ -35,14 +36,17 @@ const getOrderProducts = async () => {
 };
 
 const Orders = () => {
-	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([])
-	const [totalsByOrderId, setTotalsByOrderId] = useState<Record<string, number>>({});
+	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([]);
+	const [totalsByOrderId, setTotalsByOrderId] = useState<
+		Record<string, number>
+	>({});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const orderItemsData: OrderItemType[] =
 					await getOrderProducts();
+					console.log(orderItemsData)
 
 				const groupedOrders: GroupedOrdersMap = orderItemsData.reduce(
 					(acc: any, item: any) => {
@@ -58,6 +62,7 @@ const Orders = () => {
 						// Add the product to the products array
 						acc[item.orderId].products.push({
 							productId: item.productId,
+							productTitle: item.productTitle,
 							quantity: item.quantity,
 							subtotal: parseFloat(item.subtotal),
 						});
@@ -79,6 +84,7 @@ const Orders = () => {
 						])
 					)
 				);
+				
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
@@ -89,8 +95,9 @@ const Orders = () => {
 
 	return (
 		<div className="flex flex-col p-4 gap-4 mx-auto container min-h-[75svh]">
+			<div className={`${userOrders.length > 0 ? "hidden" : ""} flex justify-center text-xl font-semibold text-zinc-700 bg-yellow-100 px-4 py-2`}>You do not have any orders placed</div>
 			<table className="min-w-full">
-				<thead>
+				<thead className="border-b">
 					<tr>
 						<th className="px-6 py-3 text-left">Order Id</th>
 						<th className="px-6 py-3 text-left">Date</th>
@@ -98,17 +105,18 @@ const Orders = () => {
 						<th className="px-6 py-3 text-left">Cost</th>
 					</tr>
 				</thead>
+
 				<tbody>
 					{userOrders.map((order) => (
 						<tr
 							key={order.orderId}
-							className="bg-white border-b border-gray-200"
+							className="border-t border-gray-100"
 						>
-							<td className="px-6 py-4 whitespace-nowrap">
+							<td className="px-6 py-4 whitespace-nowrap text-sm">
 								{order.orderId}
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap flex gap-4">
-								{/* Dates and other details to be inserted here */}
+								
 							</td>
 							<td className="px-6 py-4 whitespace-nowrap">
 								<ul>
@@ -117,7 +125,7 @@ const Orders = () => {
 											key={product.productId}
 											className="text-xs"
 										>
-											{product.productId} <b>X</b>{" "}
+											{product.productTitle} <b>X</b>{" "}
 											{product.quantity}
 										</li>
 									))}

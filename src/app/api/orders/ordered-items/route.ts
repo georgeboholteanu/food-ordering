@@ -1,10 +1,6 @@
 // localhost:3000/api/ordered-items
 // localhost:3000/api/ordered-items?id=searchParams
-import {
-	FilteredProductsType,
-	OrderItemType,
-	ProductType,
-} from "@/types/types";
+import { FilteredProductsType } from "@/types/types";
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -90,6 +86,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 				orderId: newOrder.id,
 				productId: product.productId,
 				productTitle: product.productTitle,
+				productPrice: product.productPrice,
 				quantity: product.quantity || 1,
 				subtotal:
 					parseFloat(product.productPrice) * (product.quantity || 1),

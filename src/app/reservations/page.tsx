@@ -18,10 +18,14 @@ const Reservations = () => {
 				cache: "no-cache",
 			});
 			const data = await response.json();
-			const sortedData = data.sort((a: any, b: any) =>
-				a.title.localeCompare(b.title)
-			);
-			setTables(sortedData);
+			if (Array.isArray(data)) { // Check if data is an array
+				const sortedData = data.sort((a: any, b: any) =>
+					a.title.localeCompare(b.title)
+				);
+				setTables(sortedData);
+			} else {
+				console.error("Data fetched is not an array:", data);
+			}
 		} catch (error) {
 			console.error("Error fetching tables:", error);
 		}

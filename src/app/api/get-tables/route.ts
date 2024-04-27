@@ -19,9 +19,15 @@ export const GET = async () => {
 				},
 			},
 		});
-		return new Response(JSON.stringify(tables), { status: 200 });
+		if (tables.length > 0 || tables) {
+
+			return new NextResponse(JSON.stringify(tables), { status: 200 });
+		}
+		return new NextResponse(
+			JSON.stringify({ message: "No tables found" }),
+		)
 	} catch (error) {
-		return new Response(
+		return new NextResponse(
 			JSON.stringify({ message: "Something went wrong" }),
 			{ status: 500 }
 		);

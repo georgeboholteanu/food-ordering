@@ -12,7 +12,7 @@ const Reservations = () => {
 
 	const fetchTables = async () => {
 		const apiUrl =
-			process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"; // Simplified API URL logic
+			process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 		try {
 			const response = await fetch(`${apiUrl}/api/get-tables`, {
 				cache: "no-cache",
@@ -35,7 +35,7 @@ const Reservations = () => {
 		if (user) {
 			try {
 				const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-				const response = await fetch(`${apiUrl}/api/make-reservation?tablen=${tableName}`, {
+				const response = await fetch(`${apiUrl}/api/reservations?tablen=${tableName}`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",

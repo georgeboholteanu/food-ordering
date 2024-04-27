@@ -4,7 +4,7 @@ import { OrderItemType } from "@/types/types";
 
 interface GroupedOrder {
 	orderId: string;
-	products: OrderItemType[];	
+	products: OrderItemType[];
 	total: number;
 }
 
@@ -45,7 +45,7 @@ const Orders = () => {
 			try {
 				const orderItemsData: OrderItemType[] =
 					await getOrderProducts();
-					console.log(orderItemsData)
+				console.log(orderItemsData);
 
 				const groupedOrders: GroupedOrdersMap = orderItemsData.reduce(
 					(acc: any, item: any) => {
@@ -83,7 +83,6 @@ const Orders = () => {
 						])
 					)
 				);
-				
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
@@ -94,7 +93,13 @@ const Orders = () => {
 
 	return (
 		<div className="flex flex-col p-4 gap-4 mx-auto container min-h-[75svh]">
-			<div className={`${userOrders.length > 0 ? "hidden" : ""} flex justify-center text-xl font-semibold text-zinc-700 bg-yellow-100 px-4 py-2`}>You do not have any orders placed</div>
+			<div
+				className={`${
+					userOrders.length > 0 ? "hidden" : ""
+				} flex justify-center text-xl font-semibold text-zinc-700 bg-yellow-100 px-4 py-2`}
+			>
+				You do not have any orders placed
+			</div>
 			<table className="min-w-full">
 				<thead className="border-b">
 					<tr>
@@ -114,9 +119,7 @@ const Orders = () => {
 							<td className="px-6 py-4 whitespace-nowrap text-sm">
 								{order.orderId}
 							</td>
-							<td className="px-6 py-4 whitespace-nowrap flex gap-4">
-								
-							</td>
+							<td className="px-6 py-4 whitespace-nowrap flex gap-4"></td>
 							<td className="px-6 py-4 whitespace-nowrap">
 								<ul>
 									{order.products.map((product) => (

@@ -20,7 +20,11 @@ type Menu = {
 	color?: string;
 }[];
 
-
+type featuredProductsType = {
+	image: string;
+	title: string;
+	description: string;
+}
 
 export const featuredProducts: Products = [
 	{
@@ -274,3 +278,52 @@ export const menu: Menu = [
 		color: "green",
 	},
 ];
+
+export const featuredProductsArray = [
+	{
+		image: "/home/featured_pasta_1.png",
+		title: "Lorem food",
+		description:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	},
+	{
+		image: "/products/classic-cheeseburger.png",
+		title: "Ipsum dolor",
+		description:
+			"Dolor laboris velit esse ex proident incididunt adipisicing consequat. Commodo tempor laborum minim eu. Incididunt commodo duis irure veniam pariatur.",
+	},
+	{
+		image: "/products/pizza-supreme.png",
+		title: "Dolor Sit",
+		description:
+			"Consequat velit excepteur laborum proident anim dolor nostrud est sit. Deserunt pariatur anim non anim eiusmod do minim ipsum laborum do et do amet aute.",
+	},
+	{
+		image: "/home/featured_pasta_4.png",
+		title: "Odio morbi",
+		description:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	},
+];
+
+export const testimonialsArray = [
+	{
+		image: "/home/portrait_of_a_white_woman_blonde.png",
+		title: "Jane Smith",
+		description:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	},
+	{
+		image: "/home/portrait_of_a_white_woman_with_neckles.png",
+		title: "Martina Steven",
+		description:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	},
+	{
+		image: "/home/portrait_of_a_white_man_1.png",
+		title: "Ronnie White",
+		description:
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	},
+];
+

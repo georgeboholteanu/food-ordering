@@ -26,12 +26,12 @@ const UserLinks = () => {
                         }),
                     });
                     
-
-                    if (res.ok) {
-                        console.log("User registered successfully");
-                    } else {
-                        console.error("Failed to register user", await res.text());
-                    }
+                    console.log("Response: ", res);
+                    // if (res.ok) {
+                    //     console.log("User registered successfully");
+                    // } else {
+                    //     console.log("User already registered", await res.text());
+                    // }
                 } catch (error) {
                     console.error("Error submitting user registration request", error);
                 }
@@ -44,9 +44,9 @@ const UserLinks = () => {
     return (
         <div>
             <SignedOut>
-                <button className={`transition-all ${styles.customUnderline}`}>
+                <div className={`transition-all ${styles.customUnderline}`}>
                     <SignInButton />
-                </button>
+                </div>
             </SignedOut>
             <SignedIn>
                 <div className="flex gap-8">

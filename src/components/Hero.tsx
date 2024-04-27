@@ -9,13 +9,10 @@ export default function Hero() {
 				<Image
 					src="/general/hero_image.png"
 					alt="hero image"
+					sizes="(max-width: 1920px) 100vw, (max-width: 768px) 50vw, 33vw"
+					style={{ objectFit: "cover" }}
 					fill
 					priority
-					quality={100}
-					sizes="100vw"
-					style={{
-						objectFit: "cover",
-					}}
 				/>
 			</div>
 

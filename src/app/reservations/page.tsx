@@ -6,8 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@clerk/nextjs";
 import { TableType } from "@/types/types";
 
-const apiUrl =
-	process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 const Reservations = () => {
 	const { user } = useUser(); // Call useUser at the top level
@@ -35,19 +34,28 @@ const Reservations = () => {
 	const handleBooking = async (tableName: string) => {
 		if (user) {
 			try {
-				const response = await fetch(`${apiUrl}/api/reservations?tablen=${tableName}`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-	
+				const response = await fetch(
+					`${apiUrl}/api/reservations?tablen=${tableName}`,
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+
 				if (response.ok) {
 					const updatedTable = await response.json(); // Ensure this contains the latest table info
-					setTables(prevTables => prevTables.map(table => 
-						table.id === updatedTable.id ? {...table, ...updatedTable} : table
-					));
-					toast.success(`${tableName} has been reserved successfully.`);
+					setTables((prevTables) =>
+						prevTables.map((table) =>
+							table.id === updatedTable.id
+								? { ...table, ...updatedTable }
+								: table
+						)
+					);
+					toast.success(
+						`${tableName} has been reserved successfully.`
+					);
 				} else {
 					toast.error(await response.text());
 				}
@@ -59,7 +67,6 @@ const Reservations = () => {
 			toast.error("Please login to make reservations");
 		}
 	};
-	
 
 	return (
 		<div>
@@ -67,8 +74,7 @@ const Reservations = () => {
 				RESERVATIONS
 			</h2>
 			<div className="container mx-auto p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-				{
-				tables.map((table) => (
+				{tables.map((table) => (
 					<div className="m-2 flex flex-col" key={table.id}>
 						<div>
 							<div className="w-full p-10 border border-red-500/30 rounded-xl bg-gray-300 shadow-inner">
@@ -105,7 +111,7 @@ const Reservations = () => {
 													: "bg-red-500/30 hover:bg-red-400/30}"
 											}`}
 											onClick={() => {
-												handleBooking(table.title);												
+												handleBooking(table.title);
 											}}
 										>
 											{table.available

@@ -10,7 +10,7 @@ const UserLinks = () => {
 
     useEffect(() => {
         const registerUser = async () => {
-            if (user) {
+            if (user && user.id) {
                 
 				// console.log("User: ", user);
                 try {
@@ -25,8 +25,9 @@ const UserLinks = () => {
                             username: user.fullName,
                         }),
                     });
+                    
 
-                    if ( res.status === 200 || res.status === 201) {
+                    if (res.ok) {
                         console.log("User registered successfully");
                     } else {
                         console.error("Failed to register user", await res.text());

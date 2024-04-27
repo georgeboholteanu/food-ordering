@@ -19,7 +19,7 @@ The app is meant to simulate making table reservations and placing orders at a r
 
 ## Description
 
-The app is meant to be a web app for a restaurant business where clients can place orders online and see the restaurant's menu and find out more about the business. 
+The app is meant to be a web app for a restaurant business where clients can place orders online and see the restaurant's menu and find out more about the business.
 
 Staff can login to the app and make table reservations inside the restaurant. Orders can be previewed once the staff logs in the app.
 
@@ -41,7 +41,6 @@ After the waiter adds all the items of the order in the cart he can click the bu
 The order will be added to the order list database and a status will be displayed (WAITING CONFIRMATION, PREPARING, READY, PAYED).
 All the orders can be seen in a separate section available just for logged in users.
 The waiters will be able to finalise the bill to the clients upon request by pressing the PAY button on each order. This will trigger a confirmation message and if continued will change the status of the order to "PAYED".
-
 
 ## Using the app in development
 
@@ -69,3 +68,7 @@ npx prisma studio
 ```bash
 npm run dev
 ```
+
+## CLERK AUTH
+
+Authentication can be made using Google or Facebook account.

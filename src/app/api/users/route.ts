@@ -75,19 +75,40 @@ export const POST = async (req: NextRequest) => {
 
 		// Attempt to fetch the user by the externalId
 		const user = await clerkClient.users.getUser(externalId);
-		
-		// If user doesn't exist, create a new user
-		console.log("No existing user found, creating new user...");
-
-		const newUser = await prisma.users.create({
-			data: {
+		const existingUser = await prisma.users.findUnique({
+			where: {
 				externalId: externalId,
-				email: email,
-				name: username,
 			},
 		});
 
-		if (!newUser) {
+		if (existingUser) {
+			// If user already exists in prisma db, return an error
+			return new NextResponse(
+				JSON.stringify({ message: "User already exists" }),
+				{
+					status: 400,
+				}
+			);
+		} else if (user) {
+			// If user doesn't exist, create a new user
+			console.log("No existing user found, creating new user...");
+			const newUser = await prisma.users.create({
+				data: {
+					externalId: externalId,
+					email: email,
+					name: username,
+				},
+			});
+			return new NextResponse(
+				JSON.stringify({
+					message: `User **${username}** was created successfully`,
+					data: newUser,
+				}),
+				{
+					status: 201,
+				}
+			);
+		} else {
 			return new NextResponse(
 				JSON.stringify({ message: "Failed to create user" }),
 				{
@@ -95,17 +116,6 @@ export const POST = async (req: NextRequest) => {
 				}
 			);
 		}
-
-		// if creation is successful
-		return new NextResponse(
-			JSON.stringify({
-				message: "User created successfully",
-				data: newUser,
-			}),
-			{
-				status: 201,
-			}
-		);
 	} catch (error) {
 		console.error("Server error:", error);
 		return new NextResponse(

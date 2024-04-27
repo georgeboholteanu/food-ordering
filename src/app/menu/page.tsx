@@ -1,8 +1,7 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ProductType } from "@/types/types";
 import { GoMoveToTop } from "react-icons/go";
-
 // components
 import Card from "@/components/Card";
 
@@ -51,7 +50,7 @@ const Menu = () => {
 		fetchData();
 	}, [productTitle]);
 
-	useMemo(() => {
+	useEffect(() => {
 		// Fetch initial products when the component mounts
 		const fetchInitialProducts = async () => {
 			try {

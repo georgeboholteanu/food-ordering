@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "@/utils/connectPrisma";
+import { Prisma } from "@prisma/client";
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
 	const user = auth();
@@ -22,8 +23,9 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 				}
 			);
 		}
+
 		try {
-			// create the user to prisma db
+			// Attempt to create the user
 			await prisma.users.create({
 				data: {
 					externalId: registeredUser.id,
@@ -32,7 +34,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 				},
 			});
 
-			// return the registered user
+			// Return success response if user creation is successful
 			return new NextResponse(
 				JSON.stringify({
 					message: "User registered",
@@ -41,16 +43,30 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 				{ status: 200 }
 			);
 		} catch (error) {
-			console.error("Clerk Auth provider error:", error);
+			// Handle unique constraint violation error
+			const prismaError = error as Prisma.PrismaClientKnownRequestError;
+			const meta = prismaError.meta as { target?: string[] }; 
+			if (
+				prismaError.code === "P2002" &&
+				meta?.target?.includes("email")
+			) {
+				return new NextResponse(
+					JSON.stringify({ error: "Email address already exists" }),
+					{ status: 400 }
+				);
+			}
+
+			// Handle other errors
+			console.error("Error creating user:", prismaError);
 			return new NextResponse(
-				JSON.stringify({ error: "Clerk Auth provider Error" }),
+				JSON.stringify({ error: "Failed to create user" }),
 				{ status: 500 }
 			);
 		}
 	} catch (error) {
-		console.error("Error syncing user:", error);
+		console.error("Error fetching user from Clerk:", error);
 		return new NextResponse(
-			JSON.stringify({ error: "Failed to sync user" }),
+			JSON.stringify({ error: "Failed to fetch user from Clerk" }),
 			{ status: 500 }
 		);
 	}

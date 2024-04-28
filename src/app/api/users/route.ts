@@ -102,7 +102,7 @@ export const POST = async (req: NextRequest) => {
 			return new NextResponse(
 				JSON.stringify({ message: "User already exists" }),
 				{
-					status: 400,
+					status: 201,
 				}
 			);
 		} else if (user) {

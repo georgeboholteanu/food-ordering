@@ -71,4 +71,4 @@ npm run dev
 
 ## CLERK AUTH
 
-Authentication can be made using Google or Facebook account.
+Authentication can be made using Google or Github account.

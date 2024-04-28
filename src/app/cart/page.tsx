@@ -13,6 +13,7 @@ const Cart = () => {
 	const { isSignedIn, user } = useUser();
 	const { getToken } = useAuth();
 	const router = useRouter();
+	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 	const incrementProduct = (prod: ProductType) => {
 		const cartItemsRaw = localStorage.getItem("cartItems");
@@ -97,7 +98,7 @@ const Cart = () => {
 
 
 		try {
-			const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+			
 			const response = await fetch(`${apiUrl}/api/orders/ordered-items`, {
 				method: "POST",
 				headers: {

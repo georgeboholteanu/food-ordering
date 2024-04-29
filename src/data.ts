@@ -327,3 +327,14 @@ export const testimonialsArray = [
 	},
 ];
 
+
+export const navLinks = [
+	{ path: "/", name: "HOME" },	
+	{ path: "/menu", name: "MENU" },
+	{ path: "/book-table", name: "BOOK TABLE" },
+];
+
+export const employeeLinks = [
+	{ path: "/reservations", name: "RESERVATIONS" },
+	{ path: "/kitchen", name: "KITCHEN" },
+]

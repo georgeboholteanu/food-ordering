@@ -20,16 +20,16 @@ const Header: React.FC<HeaderProps> = () => {
 					<div className="flex items-center">
 						{/* nav */}
 						<Navbar
-							containerStyles="hidden lg:flex gap-x-10 items-center px-10 "
+							containerStyles="hidden lg:flex gap-x-10 items-center px-10 text-sm"
 							linkStyles="relative transition-all hover:primary-text"
 						/>
 						{/* mobile nav */}
-						<div className="lg:hidden">
+						<div className="lg:hidden text-sm">
 							<MobileNav />
 						</div>
 					</div>
 
-					<SideNav containerStyles="hidden lg:flex items-center gap-4" />
+					<SideNav containerStyles="hidden lg:flex items-center gap-4 text-sm" />
 				</div>
 			</div>
 		</header>

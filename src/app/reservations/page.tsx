@@ -77,8 +77,8 @@ const Reservations = () => {
 
 	return (
 		<div>
-			<h2 className="text-3xl font-bold text-center my-4">
-				RESERVATIONS
+			<h2 className="text-2xl font-bold text-center my-4">
+				Restaurant Tables
 			</h2>
 			<div className="container mx-auto p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 				{tables.map((table) => (
@@ -86,12 +86,12 @@ const Reservations = () => {
 						<div>
 							<div className="w-full p-10 border border-red-500/30 rounded-xl bg-gray-300 shadow-inner">
 								<div className="flex flex-col gap-4 place-items-center ">
-									<div className="flex space-x-4 ">
-										<h3 className="text-2xl font-bold uppercase">
+									<div className="flex flex-col justify-center items-center">
+										<h3 className="text-xl font-bold uppercase">
 											{table.title}
 										</h3>
 										<span
-											className={`text-2xl font-bold ${
+											className={`text-sm font-bold ${
 												table.available
 													? "text-green-600 "
 													: "text-red-500/70 "

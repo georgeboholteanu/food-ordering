@@ -7,11 +7,11 @@
 ![DOCKER](https://img.shields.io/badge/docker-black?style=for-the-badge&logo=docker)
 [![VERCEL](https://img.shields.io/badge/vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://food-ordering-ten.vercel.app)
 
-## Food Ordering App using NextJs, Docker and Prisma
+## Food Ordering App using NextJs, Clerk Auth and Prisma
 
 ### **Deployed on VERCEL** : [Food Ordering](https://food-ordering-ten.vercel.app)
 
-The app is meant to simulate making table reservations and placing orders at a restaurant.
+The app can be used as restaurant website where users can login on the app and place orders. They can check what is available in the food menu, verify placed orders or reserve a table in the restaurant. 
 
 ### Mockup
 

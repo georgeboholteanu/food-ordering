@@ -1,7 +1,15 @@
 import { prisma } from "@/utils/connectPrisma";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
+	const user = auth();
+
+	if (!user) {
+		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+			status: 401,
+		});
+	}
 	try {
 		const categories = await prisma.category.findMany();
 

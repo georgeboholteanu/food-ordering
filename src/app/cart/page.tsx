@@ -127,7 +127,7 @@ const Cart = () => {
 				toast.success("Order has been placed successfully!");
 				localStorage.removeItem("cartItems");
 				setCart([]); // Clear the cart in state
-				router.push("/my-orders");
+				router.push("/client-orders");
 			} else {
 				throw new Error('Failed to place the order.');
 			}

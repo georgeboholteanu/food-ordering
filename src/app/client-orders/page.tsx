@@ -11,7 +11,7 @@ interface GroupedOrder {
 
 type GroupedOrdersMap = Record<string, GroupedOrder>;
 
-const Orders = () => {
+const ClientOrders = () => {
 	const { user } = useUser();
 	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([]);
 	const [totalsByOrderId, setTotalsByOrderId] = useState<
@@ -30,7 +30,9 @@ const Orders = () => {
 
 			try {
 				const apiUrl =
-					process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
+				process.env.NEXT_PUBLIC_ENV === "development"
+					? process.env.NEXT_PUBLIC_API_URL_DEV
+					: process.env.NEXT_PUBLIC_API_URL_PROD;
 
 				const res = await fetch(
 					`${apiUrl}/api/orders?userId=${user.id}`,
@@ -150,7 +152,7 @@ const Orders = () => {
 										))}
 									</ul>
 								</td>
-								<td className="px-6 py-4 whitespace-nowrap">
+								<td className="px-2 py-4 whitespace-nowrap">
 									£{totalsByOrderId[order.orderId].toFixed(2)}
 								</td>
 							</tr>
@@ -162,4 +164,4 @@ const Orders = () => {
 	);
 };
 
-export default Orders;
+export default ClientOrders;

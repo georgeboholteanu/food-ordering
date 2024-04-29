@@ -5,6 +5,7 @@ import { Prisma } from "@prisma/client";
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
 	const user = auth();
+	console.log(user);
 
 	if (!user) {
 		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
@@ -75,11 +76,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 export const POST = async (req: NextRequest) => {
     try {
         const data = await req.json();
+		console.log(data)
         console.log("Received data:", data);
 
         // Ensure all required fields are present
         const { externalId, email, username } = data;
-        if (!externalId || !email || !username) {
+        if (!externalId || !email) {
             return new NextResponse(
                 JSON.stringify({ message: "Missing required fields" }),
                 { status: 400 }
@@ -113,7 +115,7 @@ export const POST = async (req: NextRequest) => {
             data: {
                 externalId: externalId,
                 email: email,
-                name: username,
+                name: username || email.split("@")[0],
             },
         });
 

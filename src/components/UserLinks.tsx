@@ -53,7 +53,7 @@ const UserLinks = () => {
                 <div className="flex gap-8">
                     <UserButton />
                     <button className={`transition-all ${styles.customUnderline}`}>
-                        <Link href="/my-orders">MY ORDERS</Link>
+                        <Link href="/client-orders">MY ORDERS</Link>
                     </button>
                 </div>
             </SignedIn>

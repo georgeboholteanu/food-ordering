@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@clerk/nextjs";
 import { TableType } from "@/types/types";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
 
 const Reservations = () => {
 	const { user } = useUser(); // Call useUser at the top level

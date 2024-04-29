@@ -30,7 +30,7 @@ const Orders = () => {
 
 			try {
 				const apiUrl =
-					process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+					process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
 
 				const res = await fetch(
 					`${apiUrl}/api/orders?userId=${user.id}`,

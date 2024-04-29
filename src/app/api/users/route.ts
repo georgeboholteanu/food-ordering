@@ -45,7 +45,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 		} catch (error) {
 			// Handle unique constraint violation error
 			const prismaError = error as Prisma.PrismaClientKnownRequestError;
-			const meta = prismaError.meta as { target?: string[] }; 
+			const meta = prismaError.meta as { target?: string[] };
 			if (
 				prismaError.code === "P2002" &&
 				meta?.target?.includes("email")
@@ -88,24 +88,25 @@ export const POST = async (req: NextRequest) => {
 				}
 			);
 		}
-
-		// Attempt to fetch the user by the externalId
+		// Check if user already exists in Clerk db
 		const user = await clerkClient.users.getUser(externalId);
+		if (!user) {
+			return new NextResponse(
+				JSON.stringify({ message: "User does not exist in Clerk db" }),
+				{
+					status: 500,
+				}
+			);
+		}
+		
+		// Attempt to fetch the user by the externalId
 		const existingUser = await prisma.users.findUnique({
 			where: {
 				externalId: externalId,
 			},
 		});
 
-		if (existingUser) {
-			// If user already exists in prisma db, return an error
-			return new NextResponse(
-				JSON.stringify({ message: "User already exists" }),
-				{
-					status: 201,
-				}
-			);
-		} else if (user) {
+		if (!existingUser) {
 			// If user doesn't exist, create a new user
 			console.log("No existing user found, creating new user...");
 			const newUser = await prisma.users.create({
@@ -125,10 +126,11 @@ export const POST = async (req: NextRequest) => {
 				}
 			);
 		} else {
+			// Handle case where user already exists
 			return new NextResponse(
-				JSON.stringify({ message: "Failed to create user" }),
+				JSON.stringify({ message: "User already exists" }),
 				{
-					status: 500,
+					status: 409,
 				}
 			);
 		}

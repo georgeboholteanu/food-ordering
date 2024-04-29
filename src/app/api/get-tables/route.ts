@@ -24,7 +24,7 @@ export const GET = async () => {
 			return new NextResponse(JSON.stringify(tables), { status: 200 });
 		}
 		return new NextResponse(
-			JSON.stringify({ message: "No tables found" }),
+			JSON.stringify({ message: "No tables found" , status: 404 }),
 		)
 	} catch (error) {
 		return new NextResponse(

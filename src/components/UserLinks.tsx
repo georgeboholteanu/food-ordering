@@ -11,8 +11,6 @@ const UserLinks = () => {
     useEffect(() => {
         const registerUser = async () => {
             if (user && user.id) {
-                
-				// console.log("User: ", user);
                 try {
                     const res = await fetch("/api/users", {
                         method: "POST",
@@ -25,22 +23,25 @@ const UserLinks = () => {
                             username: user.fullName,
                         }),
                     });
-                    
-                    console.log("Response: ", res);
-                    // if (res.ok) {
-                    //     console.log("User registered successfully");
-                    // } else {
-                    //     console.log("User already registered", await res.text());
-                    // }
+    
+                    if (res.ok) {
+                        console.log("User registered successfully");
+                    } else {
+                        const resultText = await res.text();  // Get the response text to see the error message
+                        console.log("User registration failed", resultText);
+                        if (res.status === 409) {
+                            console.log("User already registered");
+                        }
+                    }
                 } catch (error) {
                     console.error("Error submitting user registration request", error);
                 }
             }
         };
-
+    
         registerUser();
     }, [user]);
-
+    
     return (
         <div>
             <SignedOut>

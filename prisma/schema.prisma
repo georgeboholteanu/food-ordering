@@ -87,7 +87,7 @@ model Order {
   id         String      @id @default(cuid())
   createdAt  DateTime    @default(now())
   totalPrice Decimal     @default(0)
-  status     String      @default("Waiting confirmation from kitchen")
+  status     OrderStatus @default(WAITING_CONFIRMATION)
   user       Users       @relation(fields: [userId], references: [id])
   userId     String
   table      Tables      @relation(fields: [tableSlug], references: [title])
@@ -96,17 +96,18 @@ model Order {
 }
 
 model OrderItem {
-  id             String  @id @default(cuid())
+  id             String    @id @default(cuid())
+  createdAt      DateTime  @default(now())
   userExternalId String
-  user           Users   @relation(fields: [userExternalId], references: [externalId])
+  user           Users     @relation(fields: [userExternalId], references: [externalId])
   orderId        String
-  order          Order   @relation(fields: [orderId], references: [id])
+  order          Order     @relation(fields: [orderId], references: [id])
   productId      String
-  product        Product @relation(fields: [productId], references: [id])
+  product        Product   @relation(fields: [productId], references: [id])
   productTitle   String
-  productPrice   Decimal @default(0)
-  quantity       Int     @default(1)
-  subtotal       Decimal @default(0)
+  productPrice   Decimal   @default(0)
+  quantity       Int       @default(1)
+  subtotal       Decimal   @default(0)
 
   @@unique([userExternalId, orderId, productId])
 }
@@ -133,4 +134,12 @@ model Employees {
 enum Role {
   ADMIN
   BASIC
+}
+
+enum OrderStatus {
+  WAITING_CONFIRMATION
+  CONFIRMED
+  PREPARING
+  READY_TO_SERVE
+  COMPLETED
 }

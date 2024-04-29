@@ -12,57 +12,62 @@ interface GroupedOrder {
 type GroupedOrdersMap = Record<string, GroupedOrder>;
 
 const Orders = () => {
-	const { user } = useUser()
+	const { user } = useUser();
 	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([]);
 	const [totalsByOrderId, setTotalsByOrderId] = useState<
 		Record<string, number>
 	>({});
+	const [orderItemsData, setOrderItemsData] = useState<OrderItemType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchData = async () => {
+			if (!user?.id) {
+				console.log("User ID is undefined, skipping fetch");
+				setIsLoading(false);
+				return;
+			}
+
 			try {
 				const apiUrl =
-					process.env.NEXT_PUBLIC_ENV === "development"
-						? process.env.NEXT_PUBLIC_API_URL_DEV
-						: process.env.NEXT_PUBLIC_API_URL_PROD;
+					process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-				const getOrderProducts = async () => {					
-					const res = await fetch(
-						`${apiUrl}/api/orders?userId=${user?.id}`,
-						apiUrl === "http://localhost:3000"
-							? { cache: "no-cache" }
-							: {}
-					);
-
-					if (!res.ok) {
-						throw new Error("Failed to fetch data");
+				const res = await fetch(
+					`${apiUrl}/api/orders?userId=${user.id}`,
+					{
+						cache: "no-cache",
 					}
+				);
 
-					return res.json();
-				};
-				const orderItemsData: OrderItemType[] =
-					await getOrderProducts();
+				if (!res.ok) {
+					throw new Error(
+						`Failed to fetch data with status: ${res.status}`
+					);
+				}
 
-				const groupedOrders: GroupedOrdersMap = orderItemsData.reduce(
+				const orderItems = await res.json();
+				setOrderItemsData(orderItems);
+
+				const groupedOrders: GroupedOrdersMap = orderItems.reduce(
 					(acc: any, item: any) => {
-						if (!acc[item.orderId]) {
-							acc[item.orderId] = {
-								orderId: item.orderId,
-								products: [],
-								total: 0,
-							};
+						const {
+							orderId,
+							productId,
+							productTitle,
+							quantity,
+							subtotal,
+						} = item;
+						if (!acc[orderId]) {
+							acc[orderId] = { orderId, products: [], total: 0 };
 						}
 
-						acc[item.orderId].products.push({
-							productId: item.productId,
-							productTitle: item.productTitle,
-							quantity: item.quantity,
-							subtotal: parseFloat(item.subtotal),
+						acc[orderId].products.push({
+							productId,
+							productTitle,
+							quantity,
+							subtotal: parseFloat(subtotal),
 						});
-
-						acc[item.orderId].total += parseFloat(item.subtotal);
-
+						acc[orderId].total += parseFloat(subtotal);
 						return acc;
 					},
 					{}
@@ -71,21 +76,21 @@ const Orders = () => {
 				setUserOrders(Object.values(groupedOrders));
 				setTotalsByOrderId(
 					Object.fromEntries(
-						Object.entries(groupedOrders).map(([key, value]) => [
+						Object.keys(groupedOrders).map((key) => [
 							key,
-							value.total,
+							groupedOrders[key].total,
 						])
 					)
 				);
-				setIsLoading(false); // Set loading to false after data is processed
 			} catch (error) {
 				console.error("Error fetching data:", error);
-				setIsLoading(false); // Ensure loading is set to false even if there is an error
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
 		fetchData();
-	}, []);
+	}, [user?.id]);
 
 	if (isLoading) {
 		return <div className="min-h-[75vh]">Loading...</div>;
@@ -110,7 +115,6 @@ const Orders = () => {
 							<th className="px-6 py-3 text-left">Cost</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						{userOrders.map((order) => (
 							<tr
@@ -120,7 +124,19 @@ const Orders = () => {
 								<td className="px-2 py-4 whitespace-nowrap text-sm">
 									{order.orderId}
 								</td>
-								<td className="px-2 py-4 whitespace-nowrap flex gap-4"></td>
+								<td className="px-2 py-4 whitespace-nowrap flex gap-4 text-sm">
+									<p>
+										{new Date(
+											orderItemsData[0]?.createdAt
+										).toLocaleDateString(undefined, {
+											year: "numeric",
+											month: "numeric",
+											day: "numeric",
+											hour: "2-digit",
+											minute: "2-digit",
+										})}
+									</p>
+								</td>
 								<td className="px-2 py-4 whitespace-nowrap">
 									<ul>
 										{order.products.map((product) => (

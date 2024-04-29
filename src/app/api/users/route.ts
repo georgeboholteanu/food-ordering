@@ -73,74 +73,62 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 };
 
 export const POST = async (req: NextRequest) => {
-	try {
-		const data = await req.json();
-		console.log("Received data:", data);
+    try {
+        const data = await req.json();
+        console.log("Received data:", data);
 
-		const { externalId, email, username } = data;
+        // Ensure all required fields are present
+        const { externalId, email, username } = data;
+        if (!externalId || !email || !username) {
+            return new NextResponse(
+                JSON.stringify({ message: "Missing required fields" }),
+                { status: 400 }
+            );
+        }
 
-		// Ensure all required fields are present
-		if (!externalId || !email || !username) {
-			return new NextResponse(
-				JSON.stringify({ message: "Missing required fields" }),
-				{
-					status: 400,
-				}
-			);
-		}
-		// Check if user already exists in Clerk db
-		const user = await clerkClient.users.getUser(externalId);
-		if (!user) {
-			return new NextResponse(
-				JSON.stringify({ message: "User does not exist in Clerk db" }),
-				{
-					status: 500,
-				}
-			);
-		}
-		
-		// Attempt to fetch the user by the externalId
-		const existingUser = await prisma.users.findUnique({
-			where: {
-				externalId: externalId,
-			},
-		});
+        // Check for existing user in the local database to avoid unnecessary external calls
+        const existingUser = await prisma.users.findUnique({
+            where: { externalId: externalId },
+        });
 
-		if (!existingUser) {
-			// If user doesn't exist, create a new user
-			console.log("No existing user found, creating new user...");
-			const newUser = await prisma.users.create({
-				data: {
-					externalId: externalId,
-					email: email,
-					name: username,
-				},
-			});
-			return new NextResponse(
-				JSON.stringify({
-					message: `User **${username}** was created successfully`,
-					data: newUser,
-				}),
-				{
-					status: 201,
-				}
-			);
-		} else {
-			// Handle case where user already exists
-			return new NextResponse(
-				JSON.stringify({ message: "User already exists. Skipping registration" }),
-				{
-					status: 409,
-				}
-			);
-		}
-	} catch (error) {
-		console.error("Server error:", error);
-		return new NextResponse(
-			JSON.stringify({ message: "Internal server error", error }),
-			{
-				status: 500,
-			}
-		);
-	}
+        if (existingUser) {
+            return new NextResponse(
+                JSON.stringify({ message: "User already exists. Skipping registration" }),
+                { status: 202 }
+            );
+        }
+
+        // Since user does not exist locally, we can now check with Clerk (if necessary)
+        const user = await clerkClient.users.getUser(externalId);
+        if (!user) {
+            // Consider whether this should be a 404 or 400 based on your application logic
+            return new NextResponse(
+                JSON.stringify({ message: "User does not exist in Clerk db" }),
+                { status: 404 }
+            );
+        }
+
+        // Create new user in the local database
+        const newUser = await prisma.users.create({
+            data: {
+                externalId: externalId,
+                email: email,
+                name: username,
+            },
+        });
+
+        return new NextResponse(
+            JSON.stringify({
+                message: `User ${username} was created successfully`,
+                data: newUser,
+            }),
+            { status: 201 }
+        );
+    } catch (error) {
+        console.error("Server error:", error);
+        return new NextResponse(
+            JSON.stringify({ message: "Internal server error", error }),
+            { status: 500 }
+        );
+    }
 };

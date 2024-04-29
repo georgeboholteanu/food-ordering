@@ -71,7 +71,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		const newOrder = await prisma.order.create({
 			data: {
 				totalPrice: parseFloat(totalPrice),
-				status: "Waiting confirmation from kitchen",
 				user: {
 					connect: { id: currentUser.id },
 				},

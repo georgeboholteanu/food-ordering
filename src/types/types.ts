@@ -45,6 +45,7 @@ export type Employees = {
 
 export type OrderItemType = {
 	id: string;
+	createdAt: string;
 	externalId: string;
 	orderId: string;
 	productId: string;

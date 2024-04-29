@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { OrderItemType } from "@/types/types";
+import { useUser } from "@clerk/nextjs";
 
 interface GroupedOrder {
 	orderId: string;
@@ -11,24 +12,27 @@ interface GroupedOrder {
 type GroupedOrdersMap = Record<string, GroupedOrder>;
 
 const Orders = () => {
+	const { user } = useUser()
 	const [userOrders, setUserOrders] = useState<GroupedOrder[]>([]);
 	const [totalsByOrderId, setTotalsByOrderId] = useState<
 		Record<string, number>
 	>({});
-	const [isLoading, setIsLoading] = useState(true); // Initial loading state
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const apiUrl =
-					process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
+					process.env.NEXT_PUBLIC_ENV === "development"
+						? process.env.NEXT_PUBLIC_API_URL_DEV
+						: process.env.NEXT_PUBLIC_API_URL_PROD;
 
-				const getOrderProducts = async () => {
+				const getOrderProducts = async () => {					
 					const res = await fetch(
-						`${apiUrl}/api/orders/ordered-items`,
-						{
-							cache: "no-cache", // For development only
-						}
+						`${apiUrl}/api/orders?userId=${user?.id}`,
+						apiUrl === "http://localhost:3000"
+							? { cache: "no-cache" }
+							: {}
 					);
 
 					if (!res.ok) {

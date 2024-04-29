@@ -45,6 +45,7 @@ export type Employees = {
 
 export type OrderItemType = {
 	id: string;
+	externalId: string;
 	orderId: string;
 	productId: string;
 	productTitle: string;
@@ -55,6 +56,7 @@ export type OrderItemType = {
 
 export type FilteredProductsType = {
 	productId: string;
+	userExternalId: string;
 	productTitle: string;
 	productPrice: string;
 	quantity: number;

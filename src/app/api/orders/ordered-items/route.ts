@@ -19,24 +19,24 @@ export const GET = async (req: NextRequest) => {
 	try {
 		let orderedItems;
 		// if (id) {
-			// orderedItems = await prisma.orderItem.findMany({
-			// 	where: {
-			// 		orderId: id,
-					// ...(id ? { orderId: id } : {}),
+		// 	orderedItems = await prisma.orderItem.findMany({
+		// 		where: {
+		// 			orderId: id,
+		// 			...(id ? { orderId: id } : {}),
 		// 		},
 		// 	});
 		// } else {
-			orderedItems = await prisma.orderItem.findMany();
+		orderedItems = await prisma.orderItem.findMany();
 		// }
 
-		if (orderedItems.length > 0) {
+		if (orderedItems && orderedItems.length > 0) {
 			return new NextResponse(JSON.stringify(orderedItems), {
 				status: 200,
 			});
 		} else {
 			return new NextResponse(
-				JSON.stringify({ message: "No ordered items found" }),
-				{ status: 404 }
+				JSON.stringify({ message: "No orderes placed yet" }),
+				{ status: 204 }
 			);
 		}
 	} catch (error) {
@@ -49,7 +49,7 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	const data = await req.json();
-	console.log("Received data:", data);
+	// console.log("Received data:", data);
 	const { products, userEmail, tableSlug, totalPrice } = data;
 
 	try {
@@ -85,6 +85,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		const orderItemsData = products.map(
 			(product: FilteredProductsType) => ({
 				orderId: newOrder.id,
+				userExternalId: currentUser.externalId,
 				productId: product.productId,
 				productTitle: product.productTitle,
 				productPrice: product.productPrice,
@@ -94,6 +95,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 			})
 		);
 
+		if (!orderItemsData) {
+			return new NextResponse(
+				JSON.stringify({
+					message: "Something went wrong creating the OrderItemsData",
+				}),
+				{ status: 500 }
+			);
+		}
 		await prisma.orderItem.createMany({
 			data: orderItemsData,
 		});

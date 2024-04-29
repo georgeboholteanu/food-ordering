@@ -6,10 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "@clerk/nextjs";
 import { TableType } from "@/types/types";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
+const apiUrl =
+		process.env.NEXT_PUBLIC_ENV === "development"
+			? process.env.NEXT_PUBLIC_API_URL_DEV
+			: process.env.NEXT_PUBLIC_API_URL_PROD;
 
 const Reservations = () => {
-	const { user } = useUser(); // Call useUser at the top level
+	const { user } = useUser(); 
 	const [tables, setTables] = useState<TableType[]>([]);
 
 	const fetchTables = async () => {

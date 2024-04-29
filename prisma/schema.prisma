@@ -34,16 +34,17 @@ model Session {
 }
 
 model Users {
-  id            String    @id @default(cuid())
-  externalId    String    @unique
+  id            String      @id @default(cuid())
+  externalId    String      @unique
   name          String?
-  email         String?   @unique
+  email         String?     @unique
   emailVerified DateTime?
   image         String?
-  isAdmin       Boolean   @default(false)
+  isAdmin       Boolean     @default(false)
   accounts      Account[]
   orders        Order[]
   sessions      Session[]
+  OrderItem     OrderItem[]
 }
 
 model VerificationToken {
@@ -77,39 +78,43 @@ model Product {
   options    Json[]
   catSlug    String
   category   Category    @relation(fields: [catSlug], references: [slug])
-  orderItems OrderItem[] 
+  orderItems OrderItem[]
+
   @@unique([id, title])
 }
 
 model Order {
-  id          String      @id @default(cuid())
-  createdAt   DateTime    @default(now())
-  totalPrice  Decimal     @default(0)
-  status      String      @default("Waiting confirmation from kitchen")
-  user        Users       @relation(fields: [userId], references: [id])
-  userId      String
-  table       Tables      @relation(fields: [tableSlug], references: [title])
-  tableSlug   String
-  orderItems  OrderItem[]
+  id         String      @id @default(cuid())
+  createdAt  DateTime    @default(now())
+  totalPrice Decimal     @default(0)
+  status     String      @default("Waiting confirmation from kitchen")
+  user       Users       @relation(fields: [userId], references: [id])
+  userId     String
+  table      Tables      @relation(fields: [tableSlug], references: [title])
+  tableSlug  String
+  orderItems OrderItem[]
 }
-model OrderItem {
-  id           String   @id @default(cuid())
-  orderId      String
-  order        Order    @relation(fields: [orderId], references: [id])
-  productId    String
-  product      Product  @relation(fields: [productId], references: [id])
-  productTitle String
-  productPrice Decimal  @default(0)
-  quantity     Int      @default(1)
-  subtotal     Decimal  @default(0)
 
-  @@unique([orderId, productId])
+model OrderItem {
+  id             String  @id @default(cuid())
+  userExternalId String
+  user           Users   @relation(fields: [userExternalId], references: [externalId])
+  orderId        String
+  order          Order   @relation(fields: [orderId], references: [id])
+  productId      String
+  product        Product @relation(fields: [productId], references: [id])
+  productTitle   String
+  productPrice   Decimal @default(0)
+  quantity       Int     @default(1)
+  subtotal       Decimal @default(0)
+
+  @@unique([userExternalId, orderId, productId])
 }
 
 model Tables {
-  id        String   @id @default(cuid())
-  title     String   @unique
-  available Boolean  @default(true)
+  id        String  @id @default(cuid())
+  title     String  @unique
+  available Boolean @default(true)
   orders    Order[]
 }
 

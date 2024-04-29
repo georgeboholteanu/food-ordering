@@ -13,7 +13,10 @@ const Cart = () => {
 	const { isSignedIn, user } = useUser();
 	const { getToken } = useAuth();
 	const router = useRouter();
-	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+	const apiUrl =
+		process.env.NEXT_PUBLIC_ENV === "development"
+			? process.env.NEXT_PUBLIC_API_URL_DEV
+			: process.env.NEXT_PUBLIC_API_URL_PROD;
 
 	const incrementProduct = (prod: ProductType) => {
 		const cartItemsRaw = localStorage.getItem("cartItems");

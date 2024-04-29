@@ -128,7 +128,7 @@ export const POST = async (req: NextRequest) => {
 		} else {
 			// Handle case where user already exists
 			return new NextResponse(
-				JSON.stringify({ message: "User already exists" }),
+				JSON.stringify({ message: "User already exists. Skipping registration" }),
 				{
 					status: 409,
 				}

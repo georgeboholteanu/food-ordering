@@ -8,7 +8,9 @@ import Card from "@/components/Card";
 const menuItems = ["menu", "pastas", "pizzas", "burgers", "salads", "drinks"];
 const getData = async (product: string) => {
 	const apiUrl =
-		process.env.NEXT_PUBLIC_API_URL_PROD || "http://localhost:3000";
+		process.env.NEXT_PUBLIC_ENV === "development"
+			? process.env.NEXT_PUBLIC_API_URL_DEV
+			: process.env.NEXT_PUBLIC_API_URL_PROD;
 	const url =
 		product === "menu"
 			? `${apiUrl}/api/products`

@@ -2,8 +2,10 @@ import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
 	const user = auth();
+	const { searchParams } = new URL(req.url);
+	const externalId = searchParams.get("userId");
 
 	if (!user) {
 		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
@@ -12,11 +14,16 @@ export const GET = async () => {
 	}
 
 	try {
-		const orders = await prisma.order.findMany();
-		console.log(orders)
+		const orderedItems = await prisma.orderItem.findMany({
+			where: {
+				userExternalId: externalId!,
+			},
+		});
 
-		if (orders.length > 0) {
-			return new NextResponse(JSON.stringify(orders), { status: 200 });
+		if (orderedItems.length > 0) {
+			return new NextResponse(JSON.stringify(orderedItems), {
+				status: 200,
+			});
 		} else {
 			return new NextResponse(
 				JSON.stringify({ message: "No orders found" }),
@@ -30,5 +37,3 @@ export const GET = async () => {
 		);
 	}
 };
-
-

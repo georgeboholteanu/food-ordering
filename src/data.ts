@@ -337,30 +337,13 @@ export const employeeLinks = [
 	{ path: "/reservations", name: "RESERVATIONS" },
 	{ path: "/kitchen", name: "KITCHEN" },
 ];
-export const ordersStatus = [
-	{
-		id: 1,
-		name: "WAITING_CONFIRMATION",
-		color: "gray",
-	},
-	{
-		id: 2,
-		name: "CONFIRMED",
-		color: "yellow",
-	},
-	{
-		id: 3,
-		name: "PREPARING",
-		color: "orange",
-	},
-	{
-		id: 4,
-		name: "READY_TO_SERVE",
-		color: "red",
-	},
-	{
-		id: 5,
-		name: "COMPLETED",
-		color: "green",
-	},
-];
+
+
+export const statusToColorClass = {
+	WAITING_CONFIRMATION: "bg-gray-200",
+	CONFIRMED: "bg-yellow-200",
+	PREPARING: "bg-orange-200",
+	READY_TO_SERVE: "bg-red-200",
+	COMPLETED: "bg-green-200",
+};
+

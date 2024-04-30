@@ -330,7 +330,7 @@ export const testimonialsArray = [
 export const navLinks = [
 	{ path: "/", name: "HOME" },
 	{ path: "/menu", name: "MENU" },
-	{ path: "/book-table", name: "BOOK TABLE" },
+
 ];
 
 export const employeeLinks = [
@@ -339,11 +339,4 @@ export const employeeLinks = [
 ];
 
 
-export const statusToColorClass = {
-	WAITING_CONFIRMATION: "bg-gray-200",
-	CONFIRMED: "bg-yellow-200",
-	PREPARING: "bg-orange-200",
-	READY_TO_SERVE: "bg-red-200",
-	COMPLETED: "bg-green-200",
-};
 

@@ -7,12 +7,12 @@ import { useUser } from "@clerk/nextjs";
 import { TableType } from "@/types/types";
 
 const apiUrl =
-		process.env.NEXT_PUBLIC_ENV === "development"
-			? process.env.NEXT_PUBLIC_API_URL_DEV
-			: process.env.NEXT_PUBLIC_API_URL_PROD;
+	process.env.NEXT_PUBLIC_ENV === "development"
+		? process.env.NEXT_PUBLIC_API_URL_DEV
+		: process.env.NEXT_PUBLIC_API_URL_PROD;
 
 const Reservations = () => {
-	const { user } = useUser(); 
+	const { user } = useUser();
 	const [tables, setTables] = useState<TableType[]>([]);
 
 	const fetchTables = async () => {
@@ -21,7 +21,8 @@ const Reservations = () => {
 				cache: "no-cache",
 			});
 			const data = await response.json();
-			if (Array.isArray(data)) { // Check if data is an array
+			if (Array.isArray(data)) {
+				// Check if data is an array
 				const sortedData = data.sort((a: any, b: any) =>
 					a.title.localeCompare(b.title)
 				);

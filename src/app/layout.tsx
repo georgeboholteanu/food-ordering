@@ -1,31 +1,36 @@
 import type { Metadata } from "next";
 // import { Inter, Alata } from "next/font/google";
-import local from 'next/font/local';
+import local from "next/font/local";
+import { auth } from "@clerk/nextjs/server";
 
-	import "./globals.css";
-	import { ToastContainer } from "react-toastify";
-	import { ClerkProvider } from "@clerk/nextjs";
+import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import { ClerkProvider } from "@clerk/nextjs";
 
-	// components
+// components
 import Header from "@/components/_layout/Header";
 import Footer from "@/components/_layout/Footer";
 
 const alata = local({
-	src:[{
-		path: "../../public/fonts/Alata/Alata-Regular.ttf",
-		weight: '400',
-		style: 'normal'
-	}],
+	src: [
+		{
+			path: "../../public/fonts/Alata/Alata-Regular.ttf",
+			weight: "400",
+			style: "normal",
+		},
+	],
 	variable: "--font-alata",
-})
+});
 const roboto = local({
-	src:[{
-		path: "../../public/fonts/Roboto/Roboto-Bold.ttf",
-		weight: '700',
-		style: 'normal'
-	}],
+	src: [
+		{
+			path: "../../public/fonts/Roboto/Roboto-Bold.ttf",
+			weight: "700",
+			style: "normal",
+		},
+	],
 	variable: "--font-roboto",
-}) 
+});
 
 export const metadata: Metadata = {
 	title: "Welcome to Cucina Autentica",
@@ -37,6 +42,7 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+	// auth().protect(); // protect all routes
 	return (
 		<ClerkProvider>
 			<html lang="en">

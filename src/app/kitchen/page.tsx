@@ -1,15 +1,26 @@
 "use client";
 import { OrderItemType } from "@/types/types";
-import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { Order } from "@prisma/client";
-import { statusToColorClass } from "@/data";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
-const Kitchen = () => {
-	const { user } = useUser();
+
+interface KitchenProps {
+    rolesRequired: string[];
+}
+
+const Kitchen = ({ rolesRequired }: KitchenProps) => {
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+
+	const statusToColorClass = {
+		WAITING_CONFIRMATION: "bg-gray-200",
+		CONFIRMED: "bg-yellow-200",
+		PREPARING: "bg-orange-200",
+		READY_TO_SERVE: "bg-red-200",
+		COMPLETED: "bg-green-200",
+	};
 
 	useEffect(() => {
 		const apiUrl =
@@ -30,7 +41,6 @@ const Kitchen = () => {
 				}
 				const ordersData = await res.json();
 				setOrders(ordersData);
-				
 			} catch (error) {
 				console.error("Error fetching kitchen orders:", error);
 			}
@@ -71,88 +81,94 @@ const Kitchen = () => {
 	}
 
 	return (
-		<div className="p-4 mx-auto container min-h-[75vh]">
-			<div
-				className={`${
-					orders.length > 0 ? "hidden" : ""
-				} flex justify-center text-xl font-semibold text-zinc-700 bg-yellow-100 px-4 py-2`}
-			>
-				You do not have any orders placed
-			</div>
-			<div className="overflow-x-auto">
-				<table className="min-w-full text-center">
-					<thead className="border-b">
-						<tr>
-							<th className="px-4 py-3 ">No</th>
-							<th className="px-4 py-3 ">Order Id</th>
-							<th className="px-4 py-3 ">Date</th>
-							<th className="px-4 py-3 ">Products</th>
-							<th className="px-4 py-3 ">Cost</th>
-							<th className="px-4 py-3 ">Status</th>
-						</tr>
-					</thead>
-					<tbody>
-						{orders.map((order: Order, index) => (
-							<tr
-								key={order.id}
-								className="border-t border-gray-100 "
-							>
-								<td className="px-2 py-4 whitespace-nowrap text-xs">
-									{/* add a counter */}
-									{index+1}
-								</td>
-								<td className="px-2 py-4 whitespace-nowrap text-xs">
-									{order.id}
-								</td>
-								<td className="px-2 py-4 whitespace-nowrap text-xs">
-									<p>
-										{new Date(
-											order.createdAt
-										).toLocaleDateString(undefined, {
-											year: "numeric",
-											month: "numeric",
-											day: "numeric",
-											hour: "2-digit",
-											minute: "2-digit",
-										})}
-									</p>
-								</td>
-								<td className="px-2 py-4 whitespace-nowrap">
-									<ul>
-										{orderItems
-											.filter(
-												(item: OrderItemType) =>
-													item.orderId === order.id
-											)
-											.map((product) => (
-												<li
-													key={product.id}
-													className="text-xs"
-												>
-													{product.productTitle}{" "}
-													<b>X</b> {product.quantity}
-												</li>
-											))}
-									</ul>
-								</td>
-								<td className="px-2 py-4 whitespace-nowrap">
-									<span className="font-bold text-sm border border-gray-400 rounded-full p-2 text-zinc-800">£{order.totalPrice.toString()}</span>
-								</td>
-								<td className="px-2 py-4 whitespace-nowrap">
-									<span
-										className={`flex justify-center font-semibold text-xs px-4 py-2 rounded-full ${
-											statusToColorClass[order.status]
-										}`}
-									>
-										{order.status}
-									</span>
-								</td>
+		<ProtectedRoute rolesRequired={["ADMIN", "CHEF", "WAITER"]}>
+			<div className="p-4 mx-auto container min-h-[75vh]">
+				<div
+					className={`${
+						orders.length > 0 ? "hidden" : ""
+					} flex justify-center text-xl font-semibold text-zinc-700 bg-yellow-100 px-4 py-2`}
+				>
+					You do not have any orders placed
+				</div>
+				<div className="overflow-x-auto">
+					<table className="min-w-full text-center">
+						<thead className="border-b">
+							<tr>
+								<th className="px-4 py-3 ">No</th>
+								<th className="px-4 py-3 ">Order Id</th>
+								<th className="px-4 py-3 ">Date</th>
+								<th className="px-4 py-3 ">Products</th>
+								<th className="px-4 py-3 ">Cost</th>
+								<th className="px-4 py-3 ">Status</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{orders.map((order: Order, index) => (
+								<tr
+									key={order.id}
+									className="border-t border-gray-100 "
+								>
+									<td className="px-2 py-4 whitespace-nowrap text-xs">
+										{/* add a counter */}
+										{index + 1}
+									</td>
+									<td className="px-2 py-4 whitespace-nowrap text-xs">
+										{order.id}
+									</td>
+									<td className="px-2 py-4 whitespace-nowrap text-xs">
+										<p>
+											{new Date(
+												order.createdAt
+											).toLocaleDateString(undefined, {
+												year: "numeric",
+												month: "numeric",
+												day: "numeric",
+												hour: "2-digit",
+												minute: "2-digit",
+											})}
+										</p>
+									</td>
+									<td className="px-2 py-4 whitespace-nowrap">
+										<ul>
+											{orderItems
+												.filter(
+													(item: OrderItemType) =>
+														item.orderId ===
+														order.id
+												)
+												.map((product) => (
+													<li
+														key={product.id}
+														className="text-xs"
+													>
+														{product.productTitle}{" "}
+														<b>X</b>{" "}
+														{product.quantity}
+													</li>
+												))}
+										</ul>
+									</td>
+									<td className="px-2 py-4 whitespace-nowrap">
+										<span className="font-bold text-sm border border-gray-400 rounded-full p-2 text-zinc-800">
+											£{order.totalPrice.toString()}
+										</span>
+									</td>
+									<td className="px-2 py-4 whitespace-nowrap">
+										<span
+											className={`flex justify-center font-semibold text-xs px-4 py-2 rounded-full ${
+												statusToColorClass[order.status]
+											}`}
+										>
+											{order.status}
+										</span>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+		</ProtectedRoute>
 	);
 };
 

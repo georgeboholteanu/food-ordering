@@ -24,7 +24,7 @@ type featuredProductsType = {
 	image: string;
 	title: string;
 	description: string;
-}
+};
 
 export const featuredProducts: Products = [
 	{
@@ -327,9 +327,8 @@ export const testimonialsArray = [
 	},
 ];
 
-
 export const navLinks = [
-	{ path: "/", name: "HOME" },	
+	{ path: "/", name: "HOME" },
 	{ path: "/menu", name: "MENU" },
 	{ path: "/book-table", name: "BOOK TABLE" },
 ];
@@ -337,4 +336,31 @@ export const navLinks = [
 export const employeeLinks = [
 	{ path: "/reservations", name: "RESERVATIONS" },
 	{ path: "/kitchen", name: "KITCHEN" },
-]
+];
+export const ordersStatus = [
+	{
+		id: 1,
+		name: "WAITING_CONFIRMATION",
+		color: "gray",
+	},
+	{
+		id: 2,
+		name: "CONFIRMED",
+		color: "yellow",
+	},
+	{
+		id: 3,
+		name: "PREPARING",
+		color: "orange",
+	},
+	{
+		id: 4,
+		name: "READY_TO_SERVE",
+		color: "red",
+	},
+	{
+		id: 5,
+		name: "COMPLETED",
+		color: "green",
+	},
+];

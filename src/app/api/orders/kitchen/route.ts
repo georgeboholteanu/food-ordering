@@ -14,10 +14,12 @@ export const GET = async (req: NextRequest) => {
 	}
 
 	try {
-		const orderedItems = await prisma.orderItem.findMany();
-        console.log(orderedItems)
-		if (orderedItems && orderedItems.length > 0) {
-			return new NextResponse(JSON.stringify(orderedItems), {
+		const orders = await prisma.order.findMany({
+			
+		})
+		console.log(orders)
+		if (orders && orders.length > 0) {
+			return new NextResponse(JSON.stringify(orders), {
 				status: 200,
 			});
 		} else {
@@ -32,4 +34,4 @@ export const GET = async (req: NextRequest) => {
 			{ status: 500 }
 		);
 	}
-};
+}

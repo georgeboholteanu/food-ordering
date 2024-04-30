@@ -18,16 +18,16 @@ export const GET = async (req: NextRequest) => {
 
 	try {
 		let orderedItems;
-		// if (id) {
-		// 	orderedItems = await prisma.orderItem.findMany({
-		// 		where: {
-		// 			orderId: id,
-		// 			...(id ? { orderId: id } : {}),
-		// 		},
-		// 	});
-		// } else {
+		if (id) {
+			orderedItems = await prisma.orderItem.findMany({
+				where: {
+					orderId: id,
+					...(id ? { orderId: id } : {}),
+				},
+			});
+		} else {
 		orderedItems = await prisma.orderItem.findMany();
-		// }
+		}
 
 		if (orderedItems && orderedItems.length > 0) {
 			return new NextResponse(JSON.stringify(orderedItems), {

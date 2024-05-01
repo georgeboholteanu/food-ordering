@@ -217,29 +217,29 @@ const createProductsEntries = async () => {
 	} 
 };
 
-const createEmployeesEntries = async () => {
-	try {
-		await prisma.employees.createMany({
-			data: [
-				{
-					name: "jon",
-					surname: "doe",
-					email: "donjoe@gmail.com",
-					password: "123",
-				},
-				{
-					name: "james",
-					surname: "martin",
-					email: "jamesmartin@gmail.com",
-					password: "111",
-				},
-			],
-		});
-		console.log("Category entries created successfully");
-	} catch (error) {
-		console.error("Error creating category entries:", error);
-	} 
-};
+// const createEmployeesEntries = async () => {
+// 	try {
+// 		await prisma.employees.createMany({
+// 			data: [
+// 				{
+// 					name: "jon",
+// 					surname: "doe",
+// 					email: "donjoe@gmail.com",
+// 					password: "123",
+// 				},
+// 				{
+// 					name: "james",
+// 					surname: "martin",
+// 					email: "jamesmartin@gmail.com",
+// 					password: "111",
+// 				},
+// 			],
+// 		});
+// 		console.log("Category entries created successfully");
+// 	} catch (error) {
+// 		console.error("Error creating category entries:", error);
+// 	} 
+// };
 
 const createTablesEntries = async () => {
 	try {
@@ -285,7 +285,7 @@ const createEntries = async () => {
     await createCategoryEntries();
     await createProductsEntries();
     await createTablesEntries();
-    await createEmployeesEntries();
+    // await createEmployeesEntries();
 
     // Disconnect Prisma client when all operations are done
     await prisma.$disconnect();

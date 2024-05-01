@@ -271,42 +271,31 @@ var createProductsEntries = function () { return __awaiter(void 0, void 0, void 
         }
     });
 }); };
-var createEmployeesEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var error_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, connectPrisma_1.prisma.employees.createMany({
-                        data: [
-                            {
-                                name: "jon",
-                                surname: "doe",
-                                email: "donjoe@gmail.com",
-                                password: "123",
-                            },
-                            {
-                                name: "james",
-                                surname: "martin",
-                                email: "jamesmartin@gmail.com",
-                                password: "111",
-                            },
-                        ],
-                    })];
-            case 1:
-                _a.sent();
-                console.log("Category entries created successfully");
-                return [3 /*break*/, 3];
-            case 2:
-                error_3 = _a.sent();
-                console.error("Error creating category entries:", error_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
+// const createEmployeesEntries = async () => {
+// 	try {
+// 		await prisma.employees.createMany({
+// 			data: [
+// 				{
+// 					name: "jon",
+// 					surname: "doe",
+// 					email: "donjoe@gmail.com",
+// 					password: "123",
+// 				},
+// 				{
+// 					name: "james",
+// 					surname: "martin",
+// 					email: "jamesmartin@gmail.com",
+// 					password: "111",
+// 				},
+// 			],
+// 		});
+// 		console.log("Category entries created successfully");
+// 	} catch (error) {
+// 		console.error("Error creating category entries:", error);
+// 	} 
+// };
 var createTablesEntries = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var error_4;
+    var error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -347,8 +336,8 @@ var createTablesEntries = function () { return __awaiter(void 0, void 0, void 0,
                 console.log("Category entries created successfully");
                 return [3 /*break*/, 3];
             case 2:
-                error_4 = _a.sent();
-                console.error("Error creating category entries:", error_4);
+                error_3 = _a.sent();
+                console.error("Error creating category entries:", error_3);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -367,12 +356,11 @@ var createEntries = function () { return __awaiter(void 0, void 0, void 0, funct
                 return [4 /*yield*/, createTablesEntries()];
             case 3:
                 _a.sent();
-                return [4 /*yield*/, createEmployeesEntries()];
-            case 4:
-                _a.sent();
+                // await createEmployeesEntries();
                 // Disconnect Prisma client when all operations are done
                 return [4 /*yield*/, connectPrisma_1.prisma.$disconnect()];
-            case 5:
+            case 4:
+                // await createEmployeesEntries();
                 // Disconnect Prisma client when all operations are done
                 _a.sent();
                 return [2 /*return*/];

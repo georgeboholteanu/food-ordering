@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
 				},
 			});
 		} else {
-		orderedItems = await prisma.orderItem.findMany();
+			orderedItems = await prisma.orderItem.findMany();
 		}
 
 		if (orderedItems && orderedItems.length > 0) {
@@ -70,9 +70,9 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		// Create the order
 		const newOrder = await prisma.order.create({
 			data: {
-				totalPrice: parseFloat(totalPrice),
+				totalPrice: parseFloat(totalPrice).toFixed(2),
 				user: {
-					connect: { id: currentUser.id },
+					connect: { externalId: currentUser.externalId },
 				},
 				table: {
 					connect: { title: tableSlug },

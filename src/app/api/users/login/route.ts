@@ -16,7 +16,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 	try {
 		const registeredUser = await clerkClient.users.getUser(user.userId!);
 
-		if (!registeredUser) {
+		if (!registeredUser || !registeredUser.externalId || !registeredUser.primaryEmailAddress) {
 			return new NextResponse(
 				JSON.stringify({ message: "Unauthorized" }),
 				{
@@ -29,8 +29,8 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 			// Attempt to create the user
 			await prisma.users.create({
 				data: {
-					externalId: registeredUser.id,
-					email: registeredUser.primaryEmailAddress?.emailAddress,
+					externalId: registeredUser.externalId,
+					email: registeredUser.primaryEmailAddress.emailAddress,
 					name: registeredUser.fullName,
 				},
 			});

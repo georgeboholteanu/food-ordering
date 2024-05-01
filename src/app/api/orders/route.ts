@@ -1,12 +1,13 @@
+// http://localhost:3000/api/orders
+// ROUTE TO FETCH ORDERS BY EXTERNAL USER ID
+
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const user = auth();
-	const { searchParams } = new URL(req.url);
-	const externalId = searchParams.get("userId");
-
+	// console.log(user);
 	if (!user) {
 		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
 			status: 401,
@@ -14,14 +15,14 @@ export const GET = async (req: NextRequest) => {
 	}
 
 	try {
-		const orderedItems = await prisma.orderItem.findMany({
+		const orders = await prisma.order.findMany({
 			where: {
-				userExternalId: externalId!,
+				userExternalId: user.userId as string,
 			},
 		});
 
-		if (orderedItems.length > 0) {
-			return new NextResponse(JSON.stringify(orderedItems), {
+		if (orders && orders.length > 0) {
+			return new NextResponse(JSON.stringify(orders), {
 				status: 200,
 			});
 		} else {

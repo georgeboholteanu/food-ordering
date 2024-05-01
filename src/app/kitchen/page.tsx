@@ -31,12 +31,23 @@ const Kitchen = () => {
 				}
 				const ordersData = await res.json();
 				const sortedOrdersAscending = ordersData.sort(
-					(a: any, b: any) =>
-						new Date(a.createdAt) - new Date(b.createdAt)
+					(a: any, b: any) => {
+						const dateA = new Date(a.createdAt);
+						const dateB = new Date(b.createdAt);
+
+						return dateA.getTime() - dateB.getTime(); // Using getTime() to ensure number subtraction.
+					}
 				);
+
 				const sortedOrdersDescending = ordersData.sort(
-					(a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt)
+					(a: any, b: any) => {
+						const dateA = new Date(a.createdAt);
+						const dateB = new Date(b.createdAt);
+
+						return dateB.getTime() - dateA.getTime(); // Using getTime() to ensure number subtraction.
+					}
 				);
+
 				console.log("Kitchen orders:", ordersData);
 				setOrders(sortedOrdersDescending);
 			} catch (error) {
@@ -159,7 +170,7 @@ const Kitchen = () => {
 											className={`flex justify-center font-semibold text-xs px-4 py-2 rounded-full ${
 												statusToColorMap[
 													order.status
-												] || "bg-gray-200"
+												] 
 											}`}
 										>
 											{order.status}

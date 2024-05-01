@@ -73,12 +73,12 @@ const Kitchen = () => {
 	}, []);
 
 	if (isLoading) {
-		return <div>Loading kitchen orders...</div>;
+		return <div className="h-[75vh]">Loading kitchen orders...</div>;
 	}
 
 	return (
 		<ProtectedRoute
-			rolesRequired={userRoles.filter((role) => role !== "BASIC")}
+			rolesRequired={userRoles.filter((role) => role !== "CUSTOMER")}
 		>
 			<div className="p-4 mx-auto container min-h-[75vh]">
 				<div

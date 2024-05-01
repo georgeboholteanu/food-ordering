@@ -16,7 +16,7 @@ model Users {
   image         String?
   orders        Order[] 
   OrderItem     OrderItem[]
-  role          Role        @default(WAITER)
+  role          Role        @default(WAIT)
 }
 
 model Category {
@@ -85,9 +85,9 @@ model Tables {
 
 enum Role {
   ADMIN
-  WAITER
-  CHEF
-  BASIC
+  WAIT
+  KITCHEN
+  CUSTOMER
 }
 
 enum OrderStatus {

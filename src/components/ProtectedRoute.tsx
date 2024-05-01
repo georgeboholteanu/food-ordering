@@ -66,7 +66,7 @@ const ProtectedRoute = ({ children, rolesRequired }: ProtectedRouteProps) => {
 	}, [role, rolesRequired, isRoleFetched, router]);
 
 	if (!isSignedIn || !isRoleFetched || !rolesRequired.includes(role.toUpperCase())) {
-		return <div>Loading...</div>; // Show loading while checking user role and sign-in status
+		return <div className="h-[75vh]">Loading...</div>; // Show loading while checking user role and sign-in status
 	}
 
 	return <>{children}</>; // Render children if everything is verified

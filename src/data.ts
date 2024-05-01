@@ -337,4 +337,4 @@ export const employeeLinks = [
 	{ path: "/kitchen", name: "KITCHEN" },
 ];
 
-export const userRoles = ["ADMIN", "CHEF", "WAITER", "BASIC"];
+export const userRoles = ["ADMIN", "KITCHEN", "WAIT", "CUSTOMER"];

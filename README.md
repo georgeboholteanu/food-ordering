@@ -7,68 +7,96 @@
 ![DOCKER](https://img.shields.io/badge/docker-black?style=for-the-badge&logo=docker)
 [![VERCEL](https://img.shields.io/badge/vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://food-ordering-ten.vercel.app)
 
-## Food Ordering App using NextJs, Clerk Auth and Prisma
+## Food Ordering App using Next.js, Clerk Auth and Prisma
 
-### **Deployed on VERCEL** : [Food Ordering](https://food-ordering-ten.vercel.app)
+### Deployed on VERCEL : [Visit Cucina Autentica](https://food-ordering-ten.vercel.app)
 
-The app can be used as restaurant website where users can login on the app and place orders. They can check what is available in the food menu, verify placed orders or reserve a table in the restaurant. 
+## 1. Overview
+
+This application serves as a comprehensive digital platform for restaurant operations, facilitating a seamless interaction between customers and kitchen or service staff. It provides functionalities for menu browsing, order placement, and table reservations directly through the web interface.
+
+### Features
+
+User Authentication: Secure login through Clerk with support for Google, Github, and email-based authentication.
+Real-Time Menu: Customers can view and order from a dynamically updated menu.
+Order Management: Kitchen staff can review and update the status of orders in real-time.
+Table Reservations: Allows staff to manage and reserve tables.
+Role-Based Access: Different app sections are accessible based on user roles like Admin, Chef, and Waiter.
+A default Role has been set for new users as WAITER to provide access to restricted links.
 
 ### Mockup
 
-<img src="./public/preview-CA.png" alt="app preview" width="700" height="400"/>
+<img src="./public/preview-CA.png" alt="App Preview" style="max-width: 700px; height: auto;"/>
 
-## Description
+## 2. Getting Started
 
-The app is meant to be a web app for a restaurant business where clients can place orders online and see the restaurant's menu and find out more about the business.
+To get a local copy up and running follow these simple steps.
 
-Staff can login to the app and make table reservations inside the restaurant. Orders can be previewed once the staff logs in the app.
+### a. Prerequisites
 
-NextJS and Typescript has been used for both frontend and backend. Tailwind CSS has been used for styling along ShadCN for predefined components and Lucide React/ React Icons for icons. The app employs Clerk for handling login via Google, Facebook or custom email.
+-   Node.js
+-   Docker / Vercel account (for setting up a development/production PostgreSQL database)
+-   A Clerk account (for authentication)
 
-Prisma has been used as a CMS to store the database for products, users, employees, orders and managing table reservations or placing orders.
+### b. Installation
 
-Docker was used initially in development to host a POSTGRESQL database locally. Vercel was used as a hosting platform for the app and most recent for the production database.
+-   Clone the repo
 
-## User persona
+    ```
+    git clone https://github.com/georgeboholteanu/food-ordering.git
+    ```
 
-As a restaurant owner, I want the waiters to be able to place client's food orders efficiently.
-They should be able to access all the food and drinks available in the menu and place orders so the kitchen staff know what they need to prepare.
-In order to place orders or make reservations employee has to login to the app with their credentials.They can use either google authentication or a custom email address. For online ordering the user needs to login also.
+-   Navigate to the project directory:
 
-Each order will include an unique order id, the table number, the date, the logged in employee/user email, the order contents and the total cost.
-After the waiter adds all the items of the order in the cart he can click the button to place the order to the kitchen. They can always edit the orders placed until the order gets paid.
+    ```
+    cd food-ordering-app
+    ```
 
-The order will be added to the order list database and a status will be displayed (WAITING CONFIRMATION, PREPARING, READY, PAYED).
-All the orders can be seen in a separate section available just for logged in users.
-The waiters will be able to finalise the bill to the clients upon request by pressing the PAY button on each order. This will trigger a confirmation message and if continued will change the status of the order to "PAYED".
+-   Install NPM packages:
 
-## Using the app in development
+    ```
+    npm install
+    ```
 
-1. First, run the docker engine in windows
-2. In your terminal browse to docker folder
+-   Set up environment variables
 
-```bash
-cd src/docker
-```
+    Create a .env.local file and populate it with the necessary Clerk and production/development variables.
+    Create a .env file to populate with Postgres database variables
 
-3. Run docker
+### c. Running the app
 
-```bash
-docker compose up
-```
+-   Start Docker for PostgreSQL:
 
-4. Checking the prisma database in the browser
+    ```
+    docker-compose up -d
+    ```
 
-```bash
-npx prisma studio
-```
+-   Launch Prisma Studio to view the database:
 
-5. Run you development server
+    ```
+    npx prisma studio
+    ```
 
-```bash
-npm run dev
-```
+-   Run the development server:
 
-## CLERK AUTH
+    ```
+    npm run dev
+    ```
 
-Authentication can be made using Google or Github account.
+## Architecture
+
+-   Frontend: Next.js and TypeScript, styled with Tailwind CSS, ShadCN and Lucide React.
+-   Backend: Next.js API routes connecting to a Prisma ORM-managed PostgreSQL database.
+-   Authentication: Managed by Clerk.
+-   Deployment: The app is using Docker for accessing a developement database and is deployed on Vercel for production.
+
+## User Personas
+
+Restaurant Owner/Admin: Monitor restaurant operations and manage staff roles.
+
+Wait Staff: Place and manage food orders and table reservations.
+
+Kitchen Staff: Access and update order statuses as dishes are prepared and served.
+
+Customer: Access the menu, place food orders and see their previous orders.
+

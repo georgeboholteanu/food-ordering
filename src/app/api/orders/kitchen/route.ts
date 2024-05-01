@@ -8,8 +8,8 @@ export const GET = async (req: NextRequest) => {
 	const user = auth();
 
 	if (!user) {
-		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
-			status: 401,
+		return new NextResponse(JSON.stringify({ message: "Access denied" }), {
+			status: 403,
 		});
 	}
 
@@ -17,7 +17,7 @@ export const GET = async (req: NextRequest) => {
 		const orders = await prisma.order.findMany({
 			
 		})
-		console.log(orders)
+		
 		if (orders && orders.length > 0) {
 			return new NextResponse(JSON.stringify(orders), {
 				status: 200,

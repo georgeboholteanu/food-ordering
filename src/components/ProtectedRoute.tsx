@@ -1,63 +1,72 @@
-"use client";
+// components/ProtectedRoute.tsx
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { toast } from "react-toastify";
 
 interface ProtectedRouteProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	rolesRequired: string[];
 }
 
 const ProtectedRoute = ({ children, rolesRequired }: ProtectedRouteProps) => {
 	const { user, isSignedIn } = useUser();
 	const [role, setRole] = useState<string>("");
+	const [isRoleFetched, setIsRoleFetched] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
-		const apiUrl =
-			process.env.NEXT_PUBLIC_ENV === "development"
+		if (!user || !isSignedIn) {
+			console.log("Not signed in, redirecting to login.");
+			router.push("/");
+			return;
+		}
+
+		// Simulate fetching the role from an API endpoint
+		const fetchUserRole = async () => {
+			const apiUrl = process.env.NEXT_PUBLIC_ENV === "development"
 				? process.env.NEXT_PUBLIC_API_URL_DEV
 				: process.env.NEXT_PUBLIC_API_URL_PROD;
-
-		const fetchUserRole = async () => {
+		
 			try {
 				const res = await fetch(`${apiUrl}/api/users/check-user`, {
+					method: "GET",
+					headers: new Headers({
+						"Content-Type": "application/json",
+						// Authorization: `Bearer ${user.sessionToken}`, // Uncomment and use correct auth if necessary
+					}),
 					cache: "no-cache",
 				});
-
+		
 				if (!res.ok) {
-					throw new Error(
-						`Failed to fetch user role with status: ${res.status}`
-					);
+					throw new Error(`Failed to fetch user role with status: ${res.status}`);
 				}
 				const data = await res.json();
-                console.log("User role:", data);
-				setRole(data);
+				if (data) {
+					setRole(data);
+				} else {
+					setRole(''); // Set to empty string or handle as unauthenticated/unauthorized
+				}
+				setIsRoleFetched(true);
 			} catch (error) {
 				console.error("Error fetching user role:", error);
 			}
 		};
+		
 
-        fetchUserRole();
+		fetchUserRole();
+	}, [user, isSignedIn, router]);
 
-		if (!isSignedIn) {
-			// Redirect to login if not signed in
-            console.error("Please login first");
-			router.push("/");
-			return;
+	useEffect(() => {
+		if (isRoleFetched) {
+			if (!rolesRequired.includes(role.toUpperCase())) {
+				console.log("Role not authorized, redirecting.");
+				router.push("/forbidden");
+			}
 		}
+	}, [role, rolesRequired, isRoleFetched, router]);
 
-		if (user && rolesRequired && !rolesRequired.includes(role)) {
-			// Check if the user role is in the rolesRequired array
-            console.error("You don't have permission to access this page");
-			router.push("/");
-			return;
-		}
-	}, [ isSignedIn, user, rolesRequired, router, role]);
-
-	if (!isSignedIn || (user && !rolesRequired.includes(role as string))) {
-		return <div>Loading...</div>; // Show loading until everything is verified
+	if (!isSignedIn || !isRoleFetched || !rolesRequired.includes(role.toUpperCase())) {
+		return <div>Loading...</div>; // Show loading while checking user role and sign-in status
 	}
 
 	return <>{children}</>; // Render children if everything is verified

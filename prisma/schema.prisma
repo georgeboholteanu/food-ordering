@@ -16,7 +16,7 @@ model Users {
   image         String?
   orders        Order[] 
   OrderItem     OrderItem[]
-  role          Role        @default(BASIC)
+  role          Role        @default(WAITER)
 }
 
 model Category {

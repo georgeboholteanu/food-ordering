@@ -10,6 +10,8 @@ import {
 	useUser,
 } from "@clerk/nextjs";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserLinks = () => {
 	const user = useUser().user;
@@ -32,6 +34,26 @@ const UserLinks = () => {
 
 					if (res.ok) {
 						console.log("User registered successfully");
+
+						try {
+							const roleResponse = await fetch(
+								"/api/users/check-user",
+								{
+									cache: "no-cache",
+								}
+							);
+							const data = await roleResponse.json();
+
+							if (!data.role) {
+								toast.error("Could not fetch the user role");
+							} else {
+								toast.success(
+									`Welcome ${user.fullName}! You are logged in as ${data.role}!`
+								);
+							}
+						} catch (error) {
+							console.error("Error fetching user role:", error);
+						}
 					} else {
 						const resultText = await res.text(); // Get the response text to see the error message
 						// console.log("User registration failed", resultText);

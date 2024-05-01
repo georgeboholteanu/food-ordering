@@ -41,8 +41,8 @@ const ProtectedRoute = ({ children, rolesRequired }: ProtectedRouteProps) => {
 					throw new Error(`Failed to fetch user role with status: ${res.status}`);
 				}
 				const data = await res.json();
-				if (data) {
-					setRole(data);
+				if (data.role) {
+					setRole(data.role);
 				} else {
 					setRole(''); // Set to empty string or handle as unauthenticated/unauthorized
 				}

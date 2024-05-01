@@ -7,10 +7,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const user = auth();
+	console.log(user)
 	// check if user is authenticated
 	if (!user || !user.userId) {
 		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
-			status: 401,
+			status: 403,
 		});
 	}
 
@@ -28,8 +29,7 @@ export const GET = async (req: NextRequest) => {
 				{ status: 404 }
 			);
 		}
-		console.log("User role backend", userInDb.role);
-		return new NextResponse(JSON.stringify(userInDb.role), {
+		return new NextResponse(JSON.stringify({role: userInDb.role}), {
 			status: 200,
 		});
 	} catch (error) {

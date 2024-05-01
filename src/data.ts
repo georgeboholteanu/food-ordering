@@ -338,3 +338,18 @@ export const employeeLinks = [
 ];
 
 export const userRoles = ["ADMIN", "KITCHEN", "WAIT", "CUSTOMER"];
+
+export const statusToColorClass = [
+	{ id: 1, name: "WAITING_CONFIRMATION", color: "bg-gray-200" },
+	{ id: 2, name: "CONFIRMED", color: "bg-yellow-200" },
+	{ id: 3, name: "PREPARING", color: "bg-orange-200" },
+	{ id: 4, name: "READY_TO_SERVE", color: "bg-red-200" },
+	{ id: 5, name: "COMPLETED", color: "bg-green-200" },
+];
+export const statusToColorMap = {
+    WAITING_CONFIRMATION: "bg-gray-200",
+    CONFIRMED: "bg-yellow-200",
+    PREPARING: "bg-orange-200",
+    READY_TO_SERVE: "bg-red-200",
+    COMPLETED: "bg-green-200",
+};

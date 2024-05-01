@@ -1,59 +1,44 @@
 // http://localhost:3000/api/orders/status
 // ROUTE TO UPDATE ORDER STATUS
-import { NextRequest, NextResponse } from "next/server";
+
 import { prisma } from "@/utils/connectPrisma";
 import { auth } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
-// Define the PUT handler as a named export
-export const PUT = async (req: NextRequest, res: NextResponse) => {
-	const user = auth();
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+	
+	const user = auth(); // Ensure your auth method works appropriately in this context
 	if (!user) {
-		return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
-			status: 401,
-		});
+		return new NextResponse("Unauthorized", { status: 401 });
+	}
+	
+	const data = await req.json();
+	// Parse the JSON body from the request
+	const { orderId, status } = data;
+
+	// Validate the necessary data
+	if (!orderId || !status) {
+		return new NextResponse("Missing required data", { status: 400 });
 	}
 
-	if (req.method !== "PUT") {
-		return new NextResponse(
-			JSON.stringify({ message: "Method not allowed" }),
-			{
-				status: 405,
-			}
-		);
-	}
-
-	const { orderId } = req.body;
-
-	if (!orderId) {
-		return new NextResponse(
-			JSON.stringify({ message: "Missing orderId" }),
-			{ status: 400 }
-		);
-	}
 	try {
-		// upadate order status
+		// Update order status in the database
 		const updateResponse = await prisma.order.update({
 			where: {
 				id: orderId,
 			},
 			data: {
-				status: "COMPLETED",
+				status: status,
 			},
 		});
 
-		return new NextResponse(
-			JSON.stringify({
-				message: "Order status updated successfully",
-				order: updateResponse,
-			}),
-			{
-				status: 200,
-			}
-		);
+		// Return success response
+		return new NextResponse(JSON.stringify(updateResponse), {
+			status: 200,
+		});
 	} catch (error) {
-		return new NextResponse(
-			JSON.stringify({ message: "Something went wrong" }),
-			{ status: 500 }
-		);
+		console.error("Error updating order status:", error);
+		return new NextResponse("Internal server error", { status: 500 });
 	}
-};
+}

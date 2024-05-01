@@ -47,7 +47,7 @@ const UserLinks = () => {
 							if (!data.role) {
 								toast.error("Could not fetch the user role");
 							} else {
-								toast.success(
+								console.log(
 									`Welcome ${user.fullName}! You are logged in as ${data.role}!`
 								);
 							}

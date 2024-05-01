@@ -3,21 +3,15 @@ import { OrderItemType } from "@/types/types";
 import { useEffect, useState } from "react";
 import { Order } from "@prisma/client";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { userRoles } from "@/data";
+import ChangeStatusBtn from "@/components/ChangeStatusBtn";
+import { userRoles, statusToColorClass, statusToColorMap } from "@/data";
 
 const Kitchen = () => {
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const statusToColorClass = {
-		WAITING_CONFIRMATION: "bg-gray-200",
-		CONFIRMED: "bg-yellow-200",
-		PREPARING: "bg-orange-200",
-		READY_TO_SERVE: "bg-red-200",
-		COMPLETED: "bg-green-200",
-	};
-
+	// Fetch kitchen orders
 	useEffect(() => {
 		const apiUrl =
 			process.env.NEXT_PUBLIC_ENV === "development"
@@ -36,7 +30,15 @@ const Kitchen = () => {
 					);
 				}
 				const ordersData = await res.json();
-				setOrders(ordersData);
+				const sortedOrdersAscending = ordersData.sort(
+					(a: any, b: any) =>
+						new Date(a.createdAt) - new Date(b.createdAt)
+				);
+				const sortedOrdersDescending = ordersData.sort(
+					(a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt)
+				);
+				console.log("Kitchen orders:", ordersData);
+				setOrders(sortedOrdersDescending);
 			} catch (error) {
 				console.error("Error fetching kitchen orders:", error);
 			}
@@ -98,6 +100,7 @@ const Kitchen = () => {
 								<th className="px-4 py-3 ">Products</th>
 								<th className="px-4 py-3 ">Cost</th>
 								<th className="px-4 py-3 ">Status</th>
+								<th className="px-4 py-3 ">Update Status</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -106,7 +109,7 @@ const Kitchen = () => {
 									key={order.id}
 									className="border-t border-gray-100 "
 								>
-									<td className="px-2 py-4 whitespace-nowrap text-xs">
+									<td className="px-2 py-4 whitespace-nowrap text-xs font-semibold">
 										{/* add a counter */}
 										{index + 1}
 									</td>
@@ -154,11 +157,29 @@ const Kitchen = () => {
 									<td className="px-2 py-4 whitespace-nowrap">
 										<span
 											className={`flex justify-center font-semibold text-xs px-4 py-2 rounded-full ${
-												statusToColorClass[order.status]
+												statusToColorMap[
+													order.status
+												] || "bg-gray-200"
 											}`}
 										>
 											{order.status}
 										</span>
+									</td>
+									<td className="px-2 py-2 whitespace-nowrap">
+										<div className="flex gap-2 justify-center">
+											{statusToColorClass.map(
+												(status) => (
+													<ChangeStatusBtn
+														key={status.id}
+														btnName={status.id.toString()}
+														btnDescription={`Change order status to ${status.name}`}
+														status={status.name}
+														orderId={order.id}
+														btnStyle={`${status.color} px-2 py-2 rounded-full text-sm font-bold shadow-md`}
+													/>
+												)
+											)}
+										</div>
 									</td>
 								</tr>
 							))}

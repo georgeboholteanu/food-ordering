@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children, rolesRequired }: ProtectedRouteProps) => {
 	useEffect(() => {
 		if (!user || !isSignedIn) {
 			console.log("Not signed in, redirecting to login.");
-			router.push("/");
+			// router.push("/");
 			return;
 		}
 

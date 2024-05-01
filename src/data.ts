@@ -330,7 +330,6 @@ export const testimonialsArray = [
 export const navLinks = [
 	{ path: "/", name: "HOME" },
 	{ path: "/menu", name: "MENU" },
-
 ];
 
 export const employeeLinks = [
@@ -338,5 +337,4 @@ export const employeeLinks = [
 	{ path: "/kitchen", name: "KITCHEN" },
 ];
 
-
-
+export const userRoles = ["ADMIN", "CHEF", "WAITER", "BASIC"];

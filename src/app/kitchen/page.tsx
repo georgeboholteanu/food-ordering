@@ -3,13 +3,9 @@ import { OrderItemType } from "@/types/types";
 import { useEffect, useState } from "react";
 import { Order } from "@prisma/client";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { userRoles } from "@/data";
 
-
-interface KitchenProps {
-    rolesRequired: string[];
-}
-
-const Kitchen = ({ rolesRequired }: KitchenProps) => {
+const Kitchen = () => {
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +77,9 @@ const Kitchen = ({ rolesRequired }: KitchenProps) => {
 	}
 
 	return (
-		<ProtectedRoute rolesRequired={["ADMIN", "CHEF", "WAITER"]}>
+		<ProtectedRoute
+			rolesRequired={userRoles.filter((role) => role !== "BASIC")}
+		>
 			<div className="p-4 mx-auto container min-h-[75vh]">
 				<div
 					className={`${

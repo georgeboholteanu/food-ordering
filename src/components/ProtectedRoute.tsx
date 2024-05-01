@@ -32,7 +32,7 @@ const ProtectedRoute = ({ children, rolesRequired }: ProtectedRouteProps) => {
 					method: "GET",
 					headers: new Headers({
 						"Content-Type": "application/json",
-						// Authorization: `Bearer ${user.sessionToken}`, // Uncomment and use correct auth if necessary
+						// Authorization: `Bearer ${user.sessionToken}`, // Include user session token
 					}),
 					cache: "no-cache",
 				});

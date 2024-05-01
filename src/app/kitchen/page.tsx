@@ -48,7 +48,7 @@ const Kitchen = () => {
 					}
 				);
 
-				console.log("Kitchen orders:", ordersData);
+				// console.log("Kitchen orders:", ordersData);
 				setOrders(sortedOrdersDescending);
 			} catch (error) {
 				console.error("Error fetching kitchen orders:", error);

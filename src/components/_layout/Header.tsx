@@ -13,14 +13,14 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = () => {
 	return (
-		<header className="sticky top-0 z-30 mx-auto container-fluid py-6 px-10 sm:px-20 shadow-sm border border-b-gray-300 bg-stone-200">
+		<header className=" sticky top-0 z-30 mx-auto container-fluid py-6 px-10 sm:px-20 m-4 shadow-sm border border-b-gray-300 bg-stone-200">
 			<div className="container mx-auto">
 				<div className="flex items-center justify-between">
 					<Logo containerStyles="" />
 					<div className="flex items-center">
 						{/* nav */}
 						<Navbar
-							containerStyles="hidden lg:flex gap-x-10 items-center px-10 text-sm"
+							containerStyles="hidden lg:flex gap-x-10 items-center px-10 py-4 text-sm sm:text-md translate-x-[11%]"
 							linkStyles="relative transition-all hover:primary-text"
 						/>
 						{/* mobile nav */}

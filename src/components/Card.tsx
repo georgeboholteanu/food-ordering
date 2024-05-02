@@ -31,7 +31,7 @@ const Card: React.FC<CardProps> = ({
 						fill
 						priority
 					/>
-					<p className="text-lg font-bold btn-primary absolute bottom-2 right-4">
+					<p className="text-lg font-bold btn-price absolute bottom-2 right-4">
 						£{cardPrice}
 					</p>
 				</div>

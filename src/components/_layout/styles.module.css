@@ -1,7 +1,13 @@
 
 .customUnderline:hover {
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+    color: var(--primary)
 }
 .customUnderline {
     text-transform: uppercase!important;
+    border-bottom: 1px solid gray;
+    box-sizing: border-box;   
+    font-weight: 600;
+    margin: 10px;
+  
 }

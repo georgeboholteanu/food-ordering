@@ -16,6 +16,9 @@ const config: Config = {
       fontFamily: {
         alataRegular: ['Alata', 'sans-serif'],
       },   
+      boxShadow: {
+      'custom-inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)', // Customize as needed
+    }
     },
   },
   plugins: [],

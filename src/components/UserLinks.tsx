@@ -80,16 +80,14 @@ const UserLinks = () => {
 					<SignInButton />
 				</div>
 			</SignedOut>
-			<SignedIn>
-				<div className="flex gap-8">
+			<div className="flex flex-col sm:flex-row items-center gap-8">
+				<SignedIn>
 					<UserButton />
-					<button
-						className={`transition-all ${styles.customUnderline}`}
-					>
-						<Link href="/client-orders">MY ORDERS</Link>
-					</button>
-				</div>
-			</SignedIn>
+				</SignedIn>
+				<button className={`transition-all ${styles.customUnderline}`}>
+					<Link href="/client-orders">MY ORDERS</Link>
+				</button>
+			</div>
 		</div>
 	);
 };

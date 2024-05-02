@@ -14,8 +14,8 @@ const SideNav: React.FC<sideNavProps> = ({ containerStyles }) => {
 			<UserLinks />
 			<Link href="/cart">
 				<button className="btn-border p-2 px-5 transition-all flex gap-2 items-center">
-					<ShoppingBasket className="text-red-500 font-semibold" />
-					<span>CART</span>
+					<ShoppingBasket className="text-red-500 " />
+					<span className="font-semibold">CART</span>
 				</button>
 			</Link>
 		</div>

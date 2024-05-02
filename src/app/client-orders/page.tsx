@@ -2,7 +2,14 @@
 import { OrderItemType } from "@/types/types";
 import { useEffect, useState } from "react";
 import { Order } from "@prisma/client";
-import { statusToColorMap } from "@/data";
+
+ const statusToColorMap = {
+    WAITING_CONFIRMATION: "bg-gray-200",
+    CONFIRMED: "bg-yellow-200",
+    PREPARING: "bg-orange-200",
+    READY_TO_SERVE: "bg-red-200",
+    COMPLETED: "bg-green-200",
+};
 
 const ClientOrders = () => {
 	const [orders, setOrders] = useState<Order[]>([]);

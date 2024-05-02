@@ -4,7 +4,22 @@ import { useEffect, useState } from "react";
 import { Order } from "@prisma/client";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ChangeStatusBtn from "@/components/ChangeStatusBtn";
-import { userRoles, statusToColorClass, statusToColorMap } from "@/data";
+import { userRoles } from "@/data";
+
+const statusToColorClass = [
+	{ id: 1, name: "WAITING_CONFIRMATION", color: "bg-gray-200" },
+	{ id: 2, name: "CONFIRMED", color: "bg-yellow-200" },
+	{ id: 3, name: "PREPARING", color: "bg-orange-200" },
+	{ id: 4, name: "READY_TO_SERVE", color: "bg-red-200" },
+	{ id: 5, name: "COMPLETED", color: "bg-green-200" },
+];
+const statusToColorMap = {
+	WAITING_CONFIRMATION: "bg-gray-200",
+	CONFIRMED: "bg-yellow-200",
+	PREPARING: "bg-orange-200",
+	READY_TO_SERVE: "bg-red-200",
+	COMPLETED: "bg-green-200",
+};
 
 const Kitchen = () => {
 	const [orders, setOrders] = useState<Order[]>([]);
@@ -168,9 +183,7 @@ const Kitchen = () => {
 									<td className="px-2 py-4 whitespace-nowrap">
 										<span
 											className={`flex justify-center font-semibold text-xs px-4 py-2 rounded-full ${
-												statusToColorMap[
-													order.status
-												] 
+												statusToColorMap[order.status]
 											}`}
 										>
 											{order.status}

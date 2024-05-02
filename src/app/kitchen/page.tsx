@@ -5,6 +5,8 @@ import { Order } from "@prisma/client";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ChangeStatusBtn from "@/components/ChangeStatusBtn";
 import { userRoles } from "@/data";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const statusToColorClass = [
 	{ id: 1, name: "WAITING_CONFIRMATION", color: "bg-gray-200" },
@@ -22,6 +24,8 @@ const statusToColorMap = {
 };
 
 const Kitchen = () => {
+	const user = useUser()
+	const router = useRouter();
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [orderItems, setOrderItems] = useState<OrderItemType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -100,6 +104,10 @@ const Kitchen = () => {
 		fetchData();
 	}, []);
 
+	// If user is not logged in, redirect to homepage
+	if (!user) {
+		router.push("/");
+	}
 	if (isLoading) {
 		return <div className="h-[75vh]">Loading kitchen orders...</div>;
 	}

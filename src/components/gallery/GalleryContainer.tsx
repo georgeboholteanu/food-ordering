@@ -5,7 +5,9 @@ import Link from "next/link";
 const GalleryContainer = () => {
 	return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Gallery</h1>
+            <div className="flex justify-center items-center ">
+                <h1 className="text-4xl font-bold text-orange-700/80 px-10 mb-4 border-b border-b-zinc-600/30 py-2">Gallery</h1>
+            </div>
             <div className={styles.galleryContainer}>                
                 <Link  className={`${styles.imageContainer} ${styles.gridSpan2}`} href="/gallery/img07.png"><img src="/gallery/img07.png" alt="gallery image" /></Link>
                 <Link  className={`${styles.imageContainer} ${styles.gridSpan1}`} href="/gallery/img02.png"><img src="/gallery/img02.png" alt="gallery image" /></Link>

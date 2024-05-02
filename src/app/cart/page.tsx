@@ -212,9 +212,9 @@ const Cart = () => {
 					</button>
 					<button
 						onClick={placeOrder}
-						className="btn-primary shadow-md text-sm "
+						className="btn-price shadow-md text-sm "
 					>
-						<span className="font-semibold text-gray-200">
+						<span className="font-semibold text-white">
 							Place Order
 						</span>
 					</button>

@@ -80,7 +80,7 @@ const UserLinks = () => {
 					<SignInButton />
 				</SignedOut>
 			</div>
-			<div className="block justify-center gap-8">
+			<div className="flex items-center justify-center gap-8">
 				<SignedIn>
 					<UserButton />
 					<button className={`transition-all ${styles.customUnderline}`}>

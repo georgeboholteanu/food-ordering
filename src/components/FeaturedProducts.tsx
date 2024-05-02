@@ -19,7 +19,7 @@ const FeaturedProducts = () => {
 						return (
 							<div
 								key={idx}
-								className="flex flex-col justify-center gap-4 border-solid border-[1px]  border-yellow-500/70 rounded-lg overflow-hidden"
+								className="flex flex-col justify-center gap-4 border-solid border-[1px]  border-zinc-400/70 rounded-lg overflow-hidden shadow-lg"
 							>
 								<div className="overflow-hidden h-[420px]">
 									<div className="relative h-[60%]">

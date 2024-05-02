@@ -19,10 +19,10 @@ export default function Hero() {
 				<div className="absolute w-[310px] inset-0 flex flex-col z-10 mx-auto ml-16 lg:ml-72 mb-20 justify-end">
 					<div className="lg:bg-green-900/20 p-0 sm:p-6 rounded-lg">
 						<p className="hidden lg:block tracking-widest text-sm text-white">
-							Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit, sed do eiusmod tempor incididunt ut labore et
-							dolore magna aliqua. Magna etiam tempor orci eu.
-							Odio morbi quis commodo odio aenean.
+							Experience the symphony of flavors in our exquisite
+							meals, where tradition meets innovation. Join us for
+							a memorable dining experience that celebrates the
+							art of fine cuisine.
 						</p>
 						<Link href="/reservations">
 							<button className="btn-primary text-white font-semibold mt-8">

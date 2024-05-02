@@ -282,48 +282,48 @@ export const menu: Menu = [
 export const featuredProductsArray = [
 	{
 		image: "/home/featured_pasta_1.png",
-		title: "Lorem food",
+		title: "Pasta Primavera",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Twirls of al dente pasta enrobed in a vibrant tomato sauce, garnished with fresh basil and a playful sprinkle of herbs.",
 	},
 	{
 		image: "/products/classic-cheeseburger.png",
-		title: "Ipsum dolor",
+		title: "Classic Cheeseburger",
 		description:
-			"Dolor laboris velit esse ex proident incididunt adipisicing consequat. Commodo tempor laborum minim eu. Incididunt commodo duis irure veniam pariatur.",
+			"A juicy, perfectly grilled beef patty smothered in melted cheese, tucked into a sesame-seeded bun, accompanied by golden, crispy fries.",
 	},
 	{
 		image: "/products/pizza-supreme.png",
-		title: "Dolor Sit",
+		title: "Margherita Pizza",
 		description:
-			"Consequat velit excepteur laborum proident anim dolor nostrud est sit. Deserunt pariatur anim non anim eiusmod do minim ipsum laborum do et do amet aute.",
+			"A thin, crispy crust topped with tangy tomato sauce, creamy mozzarella, and fresh basil—straight from the wood-fired oven.",
 	},
 	{
 		image: "/home/featured_pasta_4.png",
-		title: "Odio morbi",
+		title: "Gourmet Seafood Pasta",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Elegant pasta ribbons served with a selection of the finest seafood, drizzled with a golden saffron-infused oil, and dusted with spices.",
 	},
 ];
 
 export const testimonialsArray = [
 	{
 		image: "/home/portrait_of_a_white_woman_blonde.png",
-		title: "Jane Smith",
+		title: "Emma Smith",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Emma found the ambiance enchanting and the dishes absolutely divine.",
 	},
 	{
 		image: "/home/portrait_of_a_white_woman_with_neckles.png",
-		title: "Martina Steven",
+		title: "Silvia Rover",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Silvia praised the exceptional service and exquisite flavors that danced on his palate",
 	},
 	{
 		image: "/home/portrait_of_a_white_man_1.png",
 		title: "Ronnie White",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			"Ronnie celebrated the culinary creativity that turned every meal into a delightful surprise!",
 	},
 ];
 

@@ -20,11 +20,11 @@ const Testimonials = () => {
 						return (
 							<div
 								key={idx}
-								className="flex flex-col justify-center gap-4 bg-pink-100/30"
+								className="flex flex-col justify-center gap-4 bg-zinc-200/50 rounded-lg shadow-lg"
 							>
-								<div className="relative h-[30vh] mx-4 overflow-hidden">
+								<div className="relative h-[30vh] mx-4 overflow-hidden rounded-b-xl ">
 									<div
-										className="absolute inset-0 flex justify-center items-start "
+										className="absolute inset-5 flex justify-center items-start "
 										style={{ top: "-30%" }}
 									>
 										<Image
@@ -43,10 +43,10 @@ const Testimonials = () => {
 								<h4 className="text-lg text-red-600 font-semibold px-2 justify-center flex">
 									{testimonial.title}
 								</h4>
-								<p className="text-sm font-thin px-4 pb-6">
+								<p className="text-sm font-thin px-[4rem] pb-6 text-center">
 									{testimonial.description}
 								</p>
-								<div className="py-2 px-4 items-center flex flex-col gap-2 mb-4">
+								<div className="py-2 px-4 items-center flex flex-col gap-2 mb-6">
 									<h5 className="font-semibold ">Reviews</h5>
 									<div className="flex gap-2">
 										<FaStar className="text-yellow-500 text-lg" />

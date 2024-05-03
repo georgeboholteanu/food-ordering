@@ -25,7 +25,7 @@ const Testimonials = () => {
 								<div className="relative h-[30vh] mx-4 overflow-hidden rounded-b-xl ">
 									<div
 										className="absolute inset-5 flex justify-center items-start "
-										style={{ top: "-30%" }}
+										style={{ top: "-25%" }}
 									>
 										<Image
 											src={testimonial.image}

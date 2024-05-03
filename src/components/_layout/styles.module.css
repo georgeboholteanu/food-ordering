@@ -4,7 +4,7 @@
 }
 .customUnderline {
 	text-transform: uppercase !important;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid rgb(200, 200, 200);
 	box-sizing: border-box;
 	font-weight: 600;
 	margin: 10px;

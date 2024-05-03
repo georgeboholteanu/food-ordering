@@ -40,3 +40,4 @@ next-env.d.ts
 /wireframes
 /docker
 /prisma/migrations
+/docs

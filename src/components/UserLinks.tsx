@@ -74,13 +74,13 @@ const UserLinks = () => {
 	}, [user]);
 
 	return (
-		<div className="flex">
+		<div className="flex flex-col sm:flex-row items-center justify-center">
 			<div className={`transition-all ${styles.customUnderline}`}>
 				<SignedOut>
 					<SignInButton />
 				</SignedOut>
 			</div>
-			<div className="flex items-center justify-center gap-8">
+			<div className="flex flex-col sm:flex-row items-center justify-center gap-6">
 				<SignedIn>
 					<UserButton />
 					<button className={`transition-all ${styles.customUnderline}`}>

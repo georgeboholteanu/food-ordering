@@ -14,16 +14,14 @@ const MobileNav = () => {
 				<AlignJustify className="cursor-pointer" />
 			</SheetTrigger>
 			<SheetContent>
-				<div>
-					<div className="flex flex-col justify-center">
-						<Logo containerStyles="justify-center flex mt-4" />
-						<Navbar
-							containerStyles="flex flex-col items-center gap-y-6 pt-20 pb-10"
-							linkStyles="text-lg text-black"
-						/>
-						<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 pt-20 pb-20 text-black text-lg" />
-						<Socials containerStyles="flex justify-center gap-x-4" />
-					</div>
+				<div className="flex flex-col justify-center items-center">
+					<Logo containerStyles="justify-center flex mt-4" />
+					<Navbar
+						containerStyles="flex flex-col items-center gap-y-4 py-10"
+						linkStyles="justify-center text-md sm:text-lg text-black"
+					/>
+					<SideNav containerStyles="flex flex-col justify-center items-center gap-y-6 py-10 text-black text-sm sm:text-lg" />
+					<Socials containerStyles="flex justify-center gap-x-4" />
 				</div>
 			</SheetContent>
 		</Sheet>

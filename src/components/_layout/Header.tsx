@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = () => {
 						</div>
 					</div>
 
-					<SideNav containerStyles="hidden lg:flex items-center gap-4 text-sm" />
+					<SideNav containerStyles="hidden lg:flex justify-center items-center gap-4 text-sm" />
 				</div>
 			</div>
 		</header>
